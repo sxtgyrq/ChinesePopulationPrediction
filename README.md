@@ -1,2 +1,4 @@
 # ChinesePopulationPrediction
 CreateAModelToCreateChinesePopulation
+
+1.此程序是本人在阅读知乎文章突发奇想后，想要编写一个模拟程序的。
