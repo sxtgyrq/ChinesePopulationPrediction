@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Server
 {
@@ -18,12 +19,16 @@ debug
 
         private static void AssistThread(string select)
         {
-            throw new NotImplementedException();
+            Thread ThMain = new Thread(() => Assist.Do(select));
+            ThMain.Name = "Assist";
+            ThMain.Start();
         }
 
         private static void MainThread(string select)
         {
-            throw new NotImplementedException();
+            Thread ThMain = new Thread(() => MainServer.Do(select));
+            ThMain.Name = "MainServer";
+            ThMain.Start();
         }
     }
 }

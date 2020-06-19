@@ -1,0 +1,8 @@
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Client\bin\Debug\netcoreapp3.1\Properties\launchSettings.json
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Client\bin\Debug\netcoreapp3.1\Client.exe
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Client\obj\Debug\netcoreapp3.1\Client.csprojAssemblyReference.cache
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Client\obj\Debug\netcoreapp3.1\Client.AssemblyInfoInputs.cache
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Client\obj\Debug\netcoreapp3.1\Client.AssemblyInfo.cs
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Client\obj\Debug\netcoreapp3.1\Client.RazorTargetAssemblyInfo.cache
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Client\obj\Debug\netcoreapp3.1\staticwebassets\Client.StaticWebAssets.Manifest.cache
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Client\obj\Debug\netcoreapp3.1\staticwebassets\Client.StaticWebAssets.xml

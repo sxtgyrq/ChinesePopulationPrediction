@@ -56,11 +56,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\Server\\Server.csproj",
-      "projectName": "Server",
-      "projectPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\Server\\Server.csproj",
+      "projectUniqueName": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\Client\\Client.csproj",
+      "projectName": "Client",
+      "projectPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\Client\\Client.csproj",
       "packagesPath": "C:\\Users\\sxtgy\\.nuget\\packages\\",
-      "outputPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\Server\\obj\\",
+      "outputPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\Client\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

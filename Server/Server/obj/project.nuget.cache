@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "HU+oHIDFECfInybIJ7qtBengu117A7sz1jVU0M2JarcK5G1nJCUBg4gEk17nPmAEIe83ZmBp9gYataqC1nljhA==",
+  "dgSpecHash": "0fj53D7a4ffA2p6r61ymZTLmm2kte0xe741nN8v+2wOfbftd16FIvlJ/UWYso405S4tMgIhzQevVC2jg/QFvEA==",
   "success": true,
   "projectFilePath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\Server\\Server.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\sxtgy\\.nuget\\packages\\newtonsoft.json\\11.0.2\\newtonsoft.json.11.0.2.nupkg.sha512"
+  ],
   "logs": []
 }
