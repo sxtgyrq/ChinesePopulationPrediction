@@ -18,3 +18,4 @@ F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Server\obj\Debug\netcoreapp3
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Server\obj\Debug\netcoreapp3.1\Server.pdb
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Server\bin\Debug\netcoreapp3.1\Data.json
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Server\obj\Debug\netcoreapp3.1\Server.csprojAssemblyReference.cache

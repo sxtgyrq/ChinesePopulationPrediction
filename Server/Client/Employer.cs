@@ -13,6 +13,19 @@ namespace Client
     {
         bool canLove, canBeMarried, canGetFirstBaby, canGetSecondBaby, canEducate, canSingleWork, canPlayWithChildren, canStrugle;
 
+        public string ageDisplay
+        {
+            get { return $"你今天{this.age}岁。"; }
+        }
+
+        public string ageSumSave
+        {
+            get { return $"你现在有{this.sumSave.ToString("f2")}金币的储蓄！"; }
+        }
+        double sumSave = 0;
+
+
+        int age = 22;
         internal string selection
         {
             get
@@ -69,19 +82,20 @@ namespace Client
             switch (command)
             {
                 case "1":
-                    { 
+                    {
                         if (this.canLove)
                         {
                             msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-Love" });
                         }
                     }; break;
-                case "2": 
+                case "2":
                     {
                         if (this.canBeMarried)
                         {
-                            msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-Marry" });
+                            var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new { sumSave = this.sumSave });
+                            msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-Marry", JsonValue = JsonValue });
                         }
-                    };break;
+                    }; break;
                 case "3":
                     {
                         if (this.canGetFirstBaby)
@@ -103,13 +117,13 @@ namespace Client
                             msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-Educate" });
                         }
                     }; break;
-                case "6": 
+                case "6":
                     {
                         if (this.canSingleWork)
                         {
                             msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-SingleIncome" });
                         }
-                    };break;
+                    }; break;
                 case "7":
                     {
                         if (this.canPlayWithChildren)
@@ -128,7 +142,7 @@ namespace Client
                     //case (command) { }
             }
 
-            if (!string.IsNullOrEmpty(msg)) 
+            if (!string.IsNullOrEmpty(msg))
             {
                 var ip = "127.0.0.1";
                 int port = 20701;
@@ -153,10 +167,122 @@ namespace Client
                         Console.WriteLine("{0}Received: {1}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), response);
                         stream.Close();
 
+                        switch (command)
+                        {
+                            case "1":
+                                {
+                                    var result = Newtonsoft.Json.JsonConvert.DeserializeObject<LoveResult>(response);
+                                    if (result.result == "love-success")
+                                    {
+                                        this.canBeMarried = true;
+                                        this.canLove = false;
+                                        Console.WriteLine("你恋爱成功了，开启了新技能-结婚！");
+                                        this.year++;
+                                        this.age++;
+                                    }
+                                    else if (result.result == "love-failure")
+                                    {
+                                        Console.WriteLine("你恋爱失败喽！再接再厉！");
+                                        this.year++;
+                                        this.age++;
+                                    }
+                                    else
+                                    {
+                                        throw new Exception(result.result);
+                                    }
+                                }; break;
+                            case "2":
+                                {
+                                    var result = Newtonsoft.Json.JsonConvert.DeserializeObject<MarryResult>(response);
+                                    if (result.result == "marry-success")
+                                    {
+                                        this.canBeMarried = false;
+                                        this.canGetFirstBaby = true;
+                                        Console.WriteLine("你开启了新技能，生一胎！！！");
+
+
+                                        this.sumSave -= result.housePrice * 2;
+                                        Console.WriteLine($"结婚时，买房和彩礼，一共花费掉了你{(result.housePrice * 2).ToString("f2")}金币。");
+
+                                        this.sumSave += result.dowry;
+                                        Console.WriteLine($"结婚时，你收到了来自长辈的祝福——{ result.dowry.ToString("f2")}金币。");
+
+                                        this.age++;
+                                        Console.WriteLine($"今年打工时，获得了{ result.salary.ToString("f2")}金币");
+                                        this.sumSave += result.salary;
+                                    }
+                                    else if (result.result == "marry-failure-bride") 
+                                    {
+                                        Console.WriteLine("由于你的积蓄不够彩礼和房款，你的另一半跟人跑了");
+                                        this.canBeMarried = false;
+                                        this.canLove = true;
+                                        this.age++;
+                                        Console.WriteLine($"今年打工时，获得了{ result.salary.ToString("f2")}金币");
+                                        this.sumSave += result.salary;
+                                    }
+                                    else if (result.result == "marry-failure")
+                                    {
+                                        //result.
+                                        Console.WriteLine("由于各种原因，你们还是没有组成婚姻。");
+                                        this.canBeMarried = false;
+                                        this.canLove = true;
+                                        this.age++;
+                                        Console.WriteLine($"今年打工时，获得了{ result.salary.ToString("f2")}金币");
+                                        this.sumSave += result.salary;
+                                    }
+                                    else
+                                    {
+                                        throw new Exception("");
+                                    }
+                                }; break;
+                        }
+                        //var obj = new { result = "love-success", employerAction = employerAction };
+                        //return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+
                     }
                     client.Close();
                 }
             }
+        }
+
+        public class LoveResult
+        {
+            public string result { get; set; }
+            public short employerAction { get; set; }
+
+            /// <summary>
+            /// 打工者的薪水
+            /// </summary>
+            public double salary { get; set; }
+        }
+
+        public class MarryResult
+        {
+            //         var obj = new { result = "marry-failure", employerAction = employerAction, salary = salary, dowry = dowry, housePrice = data.housePrice };
+            /// <summary>
+            /// 结果
+            /// </summary>
+            public string result { get; set; }
+            /// <summary>
+            /// 雇主属性
+            /// </summary>
+            public short employerAction { get; set; }
+
+            /// <summary>
+            /// 薪水
+            /// </summary>
+            public double salary { get; set; }
+
+            /// <summary>
+            /// 嫁妆
+            /// </summary>
+            public double dowry { get; set; }
+
+            /// <summary>
+            /// 房价
+            /// </summary>
+            public double housePrice { get; set; }
+
         }
 
         public int year { get; set; }
@@ -173,6 +299,9 @@ namespace Client
             this.canSingleWork = false;
             this.canPlayWithChildren = false;
             this.canStrugle = true;
+
+            var rm = Math.Abs(DateTime.Now.GetHashCode()) % 3;
+            this.age = 22 + rm;
         }
     }
 }

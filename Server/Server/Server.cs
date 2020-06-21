@@ -17,6 +17,8 @@ namespace Server
         int minitues { get; set; }
 
         int seconds { get; set; }
+
+        Random rm;
         public Server(string ip, int port)
         {
             IPAddress localAddr = IPAddress.Parse(ip);
@@ -27,6 +29,7 @@ namespace Server
             this.minitues = operateTimeNow.Minute;
             this.seconds = operateTimeNow.Second;
             //StartListener();
+            this.rm = new Random(DateTime.Now.GetHashCode());
         }
 
         public void StartListener(ref Data data)
@@ -150,12 +153,17 @@ namespace Server
                         }
                     case "Refresh":
                         {
-                            return Refresh(ref data);
+                            return Refresh(ref rm, ref data);
                         }; break;
                     case "Employee-Love":
                         {
-                            return Employee.Love(data, c);
+                            return Employee.Love(ref this.rm, data, c);
                         }; break;
+                    case "Employee-Marry":
+                        {
+                            return Employee.Marry(ref this.rm, data, c);
+                        }; break;
+
 
                 }
                 return "";
@@ -176,24 +184,27 @@ namespace Server
         public class Employee
         {
             /// <summary>
-            /// 员工的来爱成功率
+            /// 员工的恋爱成功率
             /// </summary>
             /// <param name="data"></param>
             /// <param name="c"></param>
             /// <returns></returns>
-            internal static string Love(ref Random rm, Data data, Command c)
+            internal static string Marry(ref Random rm, Data data, Command c)
             {
+                var marryCondition = Newtonsoft.Json.JsonConvert.DeserializeObject<MarryCondition>(c.JsonValue);
                 /*
                  * 我们假设员工的恋爱成功率是受govementPosition影响的 
                  */
                 var govementPosition = data.govementPosition.Last();
 
                 //正常那么恋爱成功率为0.05~0.8
-                var successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.375 + 0.425;
+                var successLimit = Math.Sin((govementPosition - 50) / 100 * Math.PI) * 0.2 + 0.7;
 
                 var sumActionCount = data.employerActions.Sum(item => item.Count);
 
                 short employerAction = -1;
+
+
 
                 if (sumActionCount > 0)
                 {
@@ -216,7 +227,7 @@ namespace Server
                 if (employerAction == 1)
                 {
                     //打工的时候，想谈恋爱，遇到了扯淡的996是福报论，那么恋爱成功率变为了0.05~0.7
-                    successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.325 + 0.375;
+                    // successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.325 + 0.375;
 
                 }
                 else if (employerAction == 2)
@@ -227,30 +238,75 @@ namespace Server
                 else if (employerAction == 3)
                 {
                     //打工的时候，想谈恋爱，遇到了老板招聘时，还歧视未婚未育女性，那么恋爱成功率变为了0.05~0.5
-                    successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.225 + 0.275;
+                    //  successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.225 + 0.275;
                 }
                 else if (employerAction == 4)
                 {
-                    //打工的时候，想谈恋爱，遇到了老板引进新技术时，
+                    //打工的时候，想谈恋爱，遇到了老板引进新技术时，成功时
                     //  successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.225 + 0.275;
                 }
-                else if (employerAction == 5) 
+                else if (employerAction == 5)
                 {
-                    //打工的时候，想谈恋爱，遇到了老板引进新技术时，
+                    //打工的时候，想谈恋爱，遇到了老板引进新技术时，失败时，0.05~0.7
+                    // successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.325 + 0.375;
                 }
+                else if (employerAction == 6)
+                {
+                    //打工的时候，遇上老板转移产业，反而有助于提升恋爱率0.05~0.85
+                    //successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.4 + 0.45;
 
+                }
+                else if (employerAction == 7)
+                {
+                    //打工的时候，遇上老板提高福利，应该是有利于提升恋爱成功率的。0.1~0.9
+                    //successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.4 + 0.5;
+                }
                 // var employorIndex = rm.Next(0, Employer.employerStrategyCount);
 
-
-                if (rm.NextDouble() < successLimet)
+                double salary = Math.Cos(govementPosition / 100 * Math.PI) * 0.5 + 1;
                 {
-                    return "1-True";
+                    //恋爱、政府、企业主对打工收入的影响。
+                }
+                //嫁妆
+                double dowry;
+                if (govementPosition < 50)
+                {
+                    dowry = (Math.Cos(govementPosition / 100 * Math.PI) * 2 + 1) * data.housePrice;
+
                 }
                 else
                 {
-                    return "1-False";
+                    dowry = (Math.Cos(govementPosition / 100 * Math.PI) * 1 + 1) * data.housePrice;
+                }
+                {
+                    //政府、企业对嫁妆的影响。
+                }
+
+                if (rm.NextDouble() < successLimit)
+                {
+
+                    if (marryCondition.sumSave >= data.housePrice * 2)
+                    {
+
+                        var obj = new { result = "marry-success", employerAction = employerAction, salary = salary, dowry = dowry, housePrice = data.housePrice };
+                        return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+                    }
+                    else
+                    {
+                        var obj = new { result = "marry-failure-bride", employerAction = employerAction, salary = salary, dowry = dowry, housePrice = data.housePrice };
+                        return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+                    }
+
+                    //return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+                }
+                else
+                {
+                    var obj = new { result = "marry-failure", employerAction = employerAction, salary = salary, dowry = dowry, housePrice = data.housePrice };
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
                 }
             }
+
+     
         }
         //private string Employee_Love(ref Data data)
         //{
@@ -262,7 +318,7 @@ namespace Server
             return $"{{\"businessRate\":{data.businessRate}}}";
         }
 
-        private string Refresh(ref Data data)
+        private string Refresh(ref Random rm, ref Data data)
         {
             var operateTime = DateTime.Now.AddMinutes(-this.minitues).AddSeconds(-this.seconds);
             var currentState = operateTime.ToString("yyyy-MM-dd-HH");
@@ -285,8 +341,38 @@ namespace Server
                 //打工收入，对教育成本的影响，类似于收入增加，个人所得税增加。这里表现为教育成本增加
                 if (data.employteenSumEarn.Sum() > 24 * 30)
                 {
+                    if (rm.Next(99) < data.govementPosition.Last())
+                    {
+                        //政府偏向资本时，且来百姓有钱时，政府更偏向于提高房价
+                        data.housePrice += 0.01;
+                        data.housePrice *= 1.01;
+                    }
+                    else
+                    {
+                        //政府偏向人民使，且百姓有钱时，政府更偏向于调高教育质量
+                        //所以教育资本会增加
+                        data.educateBasePrice += 0.01;
+                        data.educateBasePrice *= 1.01;
+                    }
 
                 }
+                else
+                {
+                    if (rm.Next(99) < data.govementPosition.Last())
+                    {
+                        //政府偏向资本时，且来百姓没钱时，政府更偏向于降低房价
+
+                        data.housePrice *= 0.9;
+                    }
+                    else
+                    {
+                        //政府偏向人民使，且百姓有钱时，政府更偏向于降低教育支出
+                        //所以教育资本会增加
+                        data.educateBasePrice *= 0.9;
+                    }
+                }
+
+
 
                 var lastItem = data.rencaiLevel.Last();
                 data.rencaiLevel.Add(new long[] { 0, lastItem[1] });
@@ -353,6 +439,11 @@ namespace Server
         {
             public string Type { get; set; }
             public string JsonValue { get; set; }
+        }
+
+        public class MarryCondition
+        {
+            public double sumSave { get; set; }
         }
     }
 }

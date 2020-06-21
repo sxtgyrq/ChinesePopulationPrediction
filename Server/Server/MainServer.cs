@@ -125,6 +125,7 @@ namespace Server
                          new long[]{ 0,0},new long[]{ 0,0},new long[]{ 0,0},
                      },
                     state = DateTime.Now.ToString("yyyy-MM-dd-HH"),
+                    housePrice = 1
 
                 };
                 var json = Newtonsoft.Json.JsonConvert.SerializeObject(data);

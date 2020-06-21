@@ -65,5 +65,15 @@ namespace Server
         /// </summary>
         public double educationBasePercent { get; set; }
 
+        /// <summary>
+        /// 房价
+        /// </summary>
+        public double housePrice { get; set; }
+
+        /// <summary>
+        /// 教育基本价格
+        /// </summary>
+        public double educateBasePrice { get; set; }
+
     }
 }

@@ -13,7 +13,7 @@ namespace Server
         {
             int port;
             string ip = "10.80.52.218";
-            Data dt;
+            //    Data dt;
 
             if (select.ToUpper() == "DEBUG")
             {

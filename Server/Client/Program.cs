@@ -7,31 +7,36 @@ namespace Client
     {
         static void Main(string[] args)
         {
-            string ip = "10.80.52.218";
+            // string ip = "10.80.52.218";
 
             Employee ee = null;
             while (true)
             {
-                Console.WriteLine("输入命令");
+                if (ee == null)
+                {
+                    Console.WriteLine("输入命令");
 
-                var command = Console.ReadLine();
-                if (command.ToUpper() == "EXIT")
-                {
-                    break;
+                    var command = Console.ReadLine();
+                    if (command.ToUpper() == "EXIT")
+                    {
+                        break;
+                    }
+                    else if (command.ToUpper() == "EE")
+                    {
+                        ee = new Employee();
+                    }
                 }
-                else if (command.ToUpper() == "EE") 
+                if (ee != null)
                 {
-                    ee = new Employee();
-                }
-                if (ee != null) 
-                {
+                    Console.WriteLine(ee.ageDisplay);
                     Console.WriteLine(ee.yearDisplay);
+                    Console.WriteLine(ee.ageSumSave);
                     Console.WriteLine(ee.selection);
 
-                    command= Console.ReadLine();
+                    var command = Console.ReadLine();
                     ee.DealWithCommand(command);
                 }
-                
+
             }
             Console.WriteLine("Hello World!");
         }
