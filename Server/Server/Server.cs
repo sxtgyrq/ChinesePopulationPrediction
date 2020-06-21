@@ -183,6 +183,99 @@ namespace Server
 
         public class Employee
         {
+
+            /// <summary>
+            /// 员工的来爱成功率
+            /// </summary>
+            /// <param name="data"></param>
+            /// <param name="c"></param>
+            /// <returns></returns>
+            internal static string Love(ref Random rm, Data data, Command c)
+            {
+                /*
+                 * 我们假设员工的恋爱成功率是受govementPosition影响的 
+                 */
+                var govementPosition = data.govementPosition.Last();
+
+                //正常那么恋爱成功率为0.05~0.8
+                var successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.375 + 0.425;
+
+                var sumActionCount = data.employerActions.Sum(item => item.Count);
+
+                short employerAction = -1;
+
+                if (sumActionCount > 0)
+                {
+                    var randPosition = rm.Next(sumActionCount);
+                    for (int i = 0; i < data.employerActions.Count; i++)
+                    {
+                        if (randPosition >= data.employerActions[i].Count)
+                        {
+                            randPosition -= data.employerActions[i].Count;
+                            continue;
+                        }
+                        else
+                        {
+                            employerAction = data.employerActions[i][randPosition];
+                            break;
+                        }
+                    }
+                }
+
+                if (employerAction == 1)
+                {
+                    //打工的时候，想谈恋爱，遇到了扯淡的996是福报论，那么恋爱成功率变为了0.05~0.7
+                    successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.325 + 0.375;
+
+                }
+                else if (employerAction == 2)
+                {
+                    //打工的时候，想谈恋爱，遇到了单位只招年轻人，暂时假设，其不对恋爱成功率进行影响
+
+                }
+                else if (employerAction == 3)
+                {
+                    //打工的时候，想谈恋爱，遇到了老板招聘时，还歧视未婚未育女性，那么恋爱成功率变为了0.05~0.5
+                    successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.225 + 0.275;
+                }
+                else if (employerAction == 4)
+                {
+                    //打工的时候，想谈恋爱，遇到了老板引进新技术时，成功时
+                    successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.225 + 0.275;
+                }
+                else if (employerAction == 5)
+                {
+                    //打工的时候，想谈恋爱，遇到了老板引进新技术时，失败时，0.05~0.7
+                    successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.325 + 0.375;
+                }
+                else if (employerAction == 6)
+                {
+                    //打工的时候，遇上老板转移产业，反而有助于提升恋爱率0.05~0.85
+                    successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.4 + 0.45;
+
+                }
+                else if (employerAction == 7)
+                {
+                    //打工的时候，遇上老板提高福利，应该是有利于提升恋爱成功率的。0.1~0.9
+                    successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.4 + 0.5;
+                }
+
+                double salary = Math.Cos(govementPosition / 100 * Math.PI) * 0.5 + 1;//
+                {
+                    //恋爱、政府、企业主对打工收入的影响。
+                }
+                // var employorIndex = rm.Next(0, Employer.employerStrategyCount);
+
+
+                if (rm.NextDouble() < successLimet)
+                {
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(new { result = "love-success", employerAction = employerAction, salary = salary }); ;
+                }
+                else
+                {
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(new { result = "love-failure", employerAction = employerAction, salary = salary }); ;
+                }
+            }
             /// <summary>
             /// 员工的恋爱成功率
             /// </summary>
@@ -306,7 +399,7 @@ namespace Server
                 }
             }
 
-     
+
         }
         //private string Employee_Love(ref Data data)
         //{
