@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Net.Sockets;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ namespace Client
     {
         bool canLove, canBeMarried, canGetFirstBaby, canGetSecondBaby, canEducate, canSingleWork, canPlayWithChildren, canStrugle;
 
+        int? fisrtBabyAge, secondBabyAge, thirdBabyAge, fourthBabyAge;
         public string ageDisplay
         {
             get { return $"你今天{this.age}岁。"; }
@@ -76,6 +78,7 @@ namespace Client
             }
         }
 
+        public List<string> actions = new List<string>();
         internal void DealWithCommand(string command)
         {
             var msg = "";
@@ -85,35 +88,69 @@ namespace Client
                     {
                         if (this.canLove)
                         {
-                            msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-Love" });
+                            var action = "Employee-Love";
+                            if (this.actions.Contains(action))
+                            {
+
+                            }
+                            else
+                            {
+                                this.actions.Add(action);
+                            }
+                            //var JsonValue = this.ToString();
+                            //msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-Love", });
                         }
                     }; break;
                 case "2":
                     {
-                        if (this.canBeMarried)
+                        var action = "Employee-Marry";
+                        if (this.actions.Contains(action))
                         {
-                            var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new { sumSave = this.sumSave });
-                            msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-Marry", JsonValue = JsonValue });
+
                         }
+                        else
+                        {
+                            this.actions.Add(action);
+                        }
+                        //if (this.canBeMarried)
+                        //{
+                        //    var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new { sumSave = this.sumSave, canStrugle = this.canStrugle });
+                        //    msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-Marry", JsonValue = JsonValue });
+                        //}
                     }; break;
                 case "3":
                     {
                         if (this.canGetFirstBaby)
                         {
-                            msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-GetFirstBaby" });
+                            var action = "Employee-GetFirstBaby";
+                            if (this.actions.Contains(action))
+                            {
+
+                            }
+                            else
+                            {
+                                this.actions.Add(action);
+                            }
                         }
+                        //if (this.canGetFirstBaby)
+                        //{
+                        //    var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new { canStrugle = this.canStrugle });
+                        //    msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-GetFirstBaby", canStrugle = this.canStrugle });
+                        //}
                     }; break;
                 case "4":
                     {
                         if (this.canGetSecondBaby)
                         {
-                            msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-GetSecondBaby" });
+                            var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new { canStrugle = this.canStrugle });
+                            msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-GetSecondBaby", canStrugle = this.canStrugle });
                         }
                     }; break;
                 case "5":
                     {
                         if (this.canEducate)
                         {
+                            var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new { canStrugle = this.canStrugle });
                             msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-Educate" });
                         }
                     }; break;
@@ -121,6 +158,7 @@ namespace Client
                     {
                         if (this.canSingleWork)
                         {
+                            var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new { canStrugle = this.canStrugle });
                             msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-SingleIncome" });
                         }
                     }; break;
@@ -128,6 +166,7 @@ namespace Client
                     {
                         if (this.canPlayWithChildren)
                         {
+                            var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new { canStrugle = this.canStrugle });
                             msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-PlayWithChildren" });
                         }
                     }; break;
@@ -135,13 +174,22 @@ namespace Client
                     {
                         if (this.canStrugle)
                         {
+
+                            msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-Strugle" });
+                        }
+                    }; break;
+                case "Next":
+                    {
+                        if (this.canStrugle)
+                        {
+
                             msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-Strugle" });
                         }
                     }; break;
 
                     //case (command) { }
             }
-
+            if (command == "Next") { }
             if (!string.IsNullOrEmpty(msg))
             {
                 var ip = "127.0.0.1";
@@ -179,12 +227,18 @@ namespace Client
                                         Console.WriteLine("你恋爱成功了，开启了新技能-结婚！");
                                         this.year++;
                                         this.age++;
+
+                                        Console.WriteLine($"今年打工时，获得了{ result.salary.ToString("f2")}金币");
+                                        this.sumSave += result.salary;
                                     }
                                     else if (result.result == "love-failure")
                                     {
                                         Console.WriteLine("你恋爱失败喽！再接再厉！");
                                         this.year++;
                                         this.age++;
+
+                                        Console.WriteLine($"今年打工时，获得了{ result.salary.ToString("f2")}金币");
+                                        this.sumSave += result.salary;
                                     }
                                     else
                                     {
@@ -211,7 +265,7 @@ namespace Client
                                         Console.WriteLine($"今年打工时，获得了{ result.salary.ToString("f2")}金币");
                                         this.sumSave += result.salary;
                                     }
-                                    else if (result.result == "marry-failure-bride") 
+                                    else if (result.result == "marry-failure-bride")
                                     {
                                         Console.WriteLine("由于你的积蓄不够彩礼和房款，你的另一半跟人跑了");
                                         this.canBeMarried = false;
@@ -227,6 +281,53 @@ namespace Client
                                         this.canBeMarried = false;
                                         this.canLove = true;
                                         this.age++;
+                                        Console.WriteLine($"今年打工时，获得了{ result.salary.ToString("f2")}金币");
+                                        this.sumSave += result.salary;
+                                    }
+                                    else
+                                    {
+                                        throw new Exception("");
+                                    }
+                                }; break;
+                            case "3":
+                                {
+                                    var result = Newtonsoft.Json.JsonConvert.DeserializeObject<GetFirstBabyResult>(response);
+                                    if (result.result == "getfirstbaby-success")
+                                    {
+                                        this.age++;
+
+                                        Console.WriteLine("生一胎--成功！");
+                                        this.canGetFirstBaby = false;
+
+                                        Console.WriteLine($"你开启了新技能--生二胎");
+                                        this.canGetSecondBaby = true;
+                                        this.fisrtBabyAge = 0;
+
+                                        Console.WriteLine($"你开始了新技能--教育下一代");
+                                        this.canEducate = true;
+
+                                        Console.WriteLine($"你开始了新技能--陪伴下一代");
+                                        this.canPlayWithChildren = true;
+
+                                        Console.WriteLine($"生一胎时，您花费了{result.cost.ToString("f2")}金币");
+                                        this.sumSave -= result.salary;
+
+                                        Console.WriteLine($"今年打工时，获得了{ result.salary.ToString("f2")}金币");
+                                        this.sumSave += result.salary;
+
+                                    }
+                                    else if (result.result == "getfirstbaby-failure")
+                                    {
+                                        this.age++;
+
+                                        Console.WriteLine("生一胎--失败！");
+                                        //this.canGetFirstBaby = false;
+                                        //this.canGetSecondBaby = true;
+                                        //this.fisrtBabyAge = 0;
+
+                                        //Console.WriteLine($"生一胎时，您花费了{result.cost.ToString("f2")}金币");
+                                        //this.sumSave -= result.salary;
+
                                         Console.WriteLine($"今年打工时，获得了{ result.salary.ToString("f2")}金币");
                                         this.sumSave += result.salary;
                                     }
@@ -285,6 +386,27 @@ namespace Client
 
         }
 
+        public class GetFirstBabyResult
+        {
+            /// <summary>
+            /// 结果
+            /// </summary>
+            public string result { get; set; }
+
+            /// <summary>
+            /// 打工遇到的雇主
+            /// </summary>
+            public short employerAction { get; set; }
+            /// <summary>
+            /// 获得的薪水
+            /// </summary>
+            public double salary { get; set; }
+            /// <summary>
+            /// 生一胎的花费
+            /// </summary>
+            public double cost { get; set; }
+        }
+
         public int year { get; set; }
 
         public string yearDisplay { get { return $"这是你打工第{this.year + 1}年"; } }
@@ -302,6 +424,19 @@ namespace Client
 
             var rm = Math.Abs(DateTime.Now.GetHashCode()) % 3;
             this.age = 22 + rm;
+
+            this.fisrtBabyAge = null;
+            this.secondBabyAge = null;
+            this.thirdBabyAge = null;
+            this.fourthBabyAge = null;
+        }
+
+
+
+        public override string ToString()
+        {
+            return Newtonsoft.Json.JsonConvert.SerializeObject(this);
+            //  return base.ToString();
         }
     }
 }

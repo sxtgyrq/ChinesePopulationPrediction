@@ -164,6 +164,11 @@ namespace Server
                             return Employee.Marry(ref this.rm, data, c);
                         }; break;
 
+                    case "Employee-GetFirstBaby":
+                        {
+                            return Employee.GetFirstBaby(ref this.rm, data, c);
+                        }; break;
+
 
                 }
                 return "";
@@ -183,6 +188,43 @@ namespace Server
 
         public class Employee
         {
+            internal static string GetFirstBaby(ref Random rm, Data data, Command c)
+            {
+                var govementPosition = data.govementPosition.Last();
+                var successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.375 + 0.425;
+
+                var cost = data.housePrice * 0.2;
+                var sumActionCount = data.employerActions.Sum(item => item.Count);
+
+                short employerAction = -1;
+
+                if (sumActionCount > 0)
+                {
+                    var randPosition = rm.Next(sumActionCount);
+                    for (int i = 0; i < data.employerActions.Count; i++)
+                    {
+                        if (randPosition >= data.employerActions[i].Count)
+                        {
+                            randPosition -= data.employerActions[i].Count;
+                            continue;
+                        }
+                        else
+                        {
+                            employerAction = data.employerActions[i][randPosition];
+                            break;
+                        }
+                    }
+                }
+                double salary = Math.Cos(govementPosition / 100 * Math.PI) * 0.5 + 1;//
+                if (rm.NextDouble() < successLimet)
+                {
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(new { result = "getfirstbaby-success", employerAction = employerAction, salary = salary, cost = cost }); ;
+                }
+                else
+                {
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(new { result = "getfirstbaby-failure", employerAction = employerAction, salary = salary, cost = cost }); ;
+                }
+            }
 
             /// <summary>
             /// 员工的来爱成功率
