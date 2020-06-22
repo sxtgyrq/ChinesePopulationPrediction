@@ -155,19 +155,23 @@ namespace Server
                         {
                             return Refresh(ref rm, ref data);
                         }; break;
-                    case "Employee-Love":
+                    case "Employee":
                         {
-                            return Employee.Love(ref this.rm, data, c);
+                            return Employee.DoAction(ref this.rm, data, c);
                         }; break;
-                    case "Employee-Marry":
-                        {
-                            return Employee.Marry(ref this.rm, data, c);
-                        }; break;
+                    //case "Employee-Love":
+                    //    {
+                    //        return Employee.Love(ref this.rm, data, c);
+                    //    }; break;
+                    //case "Employee-Marry":
+                    //    {
+                    //        return Employee.Marry(ref this.rm, data, c);
+                    //    }; break;
 
-                    case "Employee-GetFirstBaby":
-                        {
-                            return Employee.GetFirstBaby(ref this.rm, data, c);
-                        }; break;
+                    //case "Employee-GetFirstBaby":
+                    //    {
+                    //        return Employee.GetFirstBaby(ref this.rm, data, c);
+                    //    }; break;
 
 
                 }
@@ -188,6 +192,11 @@ namespace Server
 
         public class Employee
         {
+            internal static string DoAction(ref Random rm, Data data, Command c)
+            {
+                throw new NotImplementedException();
+            }
+
             internal static string GetFirstBaby(ref Random rm, Data data, Command c)
             {
                 var govementPosition = data.govementPosition.Last();
