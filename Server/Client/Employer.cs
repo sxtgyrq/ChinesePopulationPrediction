@@ -80,12 +80,12 @@ namespace Client
                     msg += "4.要二胎";
                     msg += Environment.NewLine;
                 }
-                if (this.state.canGetSecondBaby)
+                if (this.state.canGetThirdBaby)
                 {
                     msg += "5.要三胎";
                     msg += Environment.NewLine;
                 }
-                if (this.state.canGetSecondBaby)
+                if (this.state.canGetFourthBaby)
                 {
                     msg += "6.要四胎";
                     msg += Environment.NewLine;
@@ -230,34 +230,50 @@ namespace Client
                                 this.actions.Add(action);
                             }
                         }
-                        //if (this.canGetFirstBaby)
-                        //{
-                        //    var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new { canStrugle = this.canStrugle });
-                        //    msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-GetFirstBaby", canStrugle = this.canStrugle });
-                        //}
                     }; break;
                 case "4":
                     {
                         if (this.state.canGetSecondBaby)
                         {
-                            //var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new { canStrugle = this.canStrugle });
-                            //msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-GetSecondBaby", canStrugle = this.canStrugle });
+                            var action = "Employee-GetSecondBaby";
+                            if (this.actions.Contains(action))
+                            {
+
+                            }
+                            else
+                            {
+                                this.actions.Add(action);
+                            }
                         }
                     }; break;
                 case "5":
                     {
-                        if (this.state.canEducate)
+                        if (this.state.canGetThirdBaby)
                         {
-                            //var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new { canStrugle = this.canStrugle });
-                            //msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-Educate" });
+                            var action = "Employee-GetThirdBaby";
+                            if (this.actions.Contains(action))
+                            {
+
+                            }
+                            else
+                            {
+                                this.actions.Add(action);
+                            }
                         }
                     }; break;
                 case "6":
                     {
-                        if (this.state.canSingleWork)
+                        if (this.state.canGetFourthBaby)
                         {
-                            //var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new { canStrugle = this.canStrugle });
-                            //msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-SingleIncome" });
+                            var action = "Employee-GetFourthBaby";
+                            if (this.actions.Contains(action))
+                            {
+
+                            }
+                            else
+                            {
+                                this.actions.Add(action);
+                            }
                         }
                     }; break;
                 case "7":
