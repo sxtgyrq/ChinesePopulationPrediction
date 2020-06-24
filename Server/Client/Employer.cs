@@ -19,6 +19,8 @@ namespace Client
             public bool canBeMarried { get; set; }
             public bool canGetFirstBaby { get; set; }
             public bool canGetSecondBaby { get; set; }
+            public bool canGetThirdBaby { get; set; }
+            public bool canGetFourthBaby { get; set; }
             public bool canEducate { get; set; }
             public bool canSingleWork { get; set; }
             public bool canPlayWithChildren { get; set; }
@@ -78,24 +80,34 @@ namespace Client
                     msg += "4.要二胎";
                     msg += Environment.NewLine;
                 }
+                if (this.state.canGetSecondBaby)
+                {
+                    msg += "5.要三胎";
+                    msg += Environment.NewLine;
+                }
+                if (this.state.canGetSecondBaby)
+                {
+                    msg += "6.要四胎";
+                    msg += Environment.NewLine;
+                }
                 if (this.state.canEducate)
                 {
-                    msg += "5.教育";
+                    msg += "7.教育";
                     msg += Environment.NewLine;
                 }
                 if (this.state.canSingleWork)
                 {
-                    msg += "6.男方上班，女方顾家";
+                    msg += "8.男方上班，女方顾家";
                     msg += Environment.NewLine;
                 }
                 if (this.state.canPlayWithChildren)
                 {
-                    msg += "7.陪伴小孩，亲子";
+                    msg += "9.陪伴小孩，亲子";
                     msg += Environment.NewLine;
                 }
                 if (this.state.canStrugle)
                 {
-                    msg += "8.奋斗";
+                    msg += "A.奋斗";
                     msg += Environment.NewLine;
                 }
 
@@ -104,6 +116,63 @@ namespace Client
         }
 
         public List<string> actions = new List<string>();
+        internal string childrenInfo
+        {
+            get
+            {
+                var msg = "";
+                if (this.state.fisrtBabyAge != null)
+                {
+                    if (this.state.fisrtBabyAge == 0)
+                    {
+                        msg += "您第一个孩子刚刚出生；";
+                    }
+                    else
+                    {
+                        msg += $"您第一个个孩子{this.state.fisrtBabyAge}岁了！";
+                    }
+                    msg += Environment.NewLine;
+                }
+                if (this.state.secondBabyAge != null)
+                {
+                    if (this.state.secondBabyAge == 0)
+                    {
+                        msg += "您第二个孩子刚刚出生；";
+                    }
+                    else
+                    {
+                        msg += $"您第二个孩子{this.state.secondBabyAge}岁了！";
+                    }
+                    msg += Environment.NewLine;
+                }
+                if (this.state.thirdBabyAge != null)
+                {
+                    if (this.state.thirdBabyAge == 0)
+                    {
+                        msg += "您第三个孩子刚刚出生；";
+                    }
+                    else
+                    {
+                        msg += $"您第三个孩子{this.state.thirdBabyAge}岁了！";
+                    }
+                    msg += Environment.NewLine;
+                }
+                if (this.state.fourthBabyAge != null)
+                {
+                    if (this.state.fourthBabyAge == 0)
+                    {
+                        msg += "您第四个孩子刚刚出生；";
+                    }
+                    else
+                    {
+                        msg += $"您第四个孩子{this.state.fourthBabyAge}岁了！";
+                    }
+                    msg += Environment.NewLine;
+                }
+                return msg;
+            }
+        }
+
         internal void DealWithCommand(string command)
         {
             var msg = "";
@@ -121,6 +190,7 @@ namespace Client
                             else
                             {
                                 this.actions.Add(action);
+
                             }
                             //var JsonValue = this.ToString();
                             //msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-Love", });
@@ -245,11 +315,19 @@ namespace Client
                             Console.WriteLine("{0}Received: {1}", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"), response);
                             stream.Close();
 
+                            if (string.IsNullOrEmpty(response)) { }
+                            else
+                            {
 
-                            var PassObj = Newtonsoft.Json.JsonConvert.DeserializeObject<PassObj>(response);
-                            this.actions = PassObj.actions;
-                            this.state = PassObj.state;
+                                var PassObj = Newtonsoft.Json.JsonConvert.DeserializeObject<PassObj>(response);
+                                this.actions = new List<string>();
+                                this.state = PassObj.state;
 
+                                for (int i = 0; i < PassObj.notifyMsgs.Count; i++)
+                                {
+                                    Console.WriteLine(PassObj.notifyMsgs[i]);
+                                }
+                            }
                         }
                         client.Close();
                     }
@@ -329,6 +407,8 @@ namespace Client
         public string yearDisplay { get { return $"这是你打工第{this.state.year + 1}年"; } }
         public Employee()
         {
+            this.state = new State();
+            this.actions = new List<string>();
             this.state.year = 0;
             this.state.canLove = true;
             this.state.canBeMarried = false;
@@ -353,13 +433,16 @@ namespace Client
         {
             public State state { get; set; }
             public List<string> actions { get; set; }
+
+            public List<string> notifyMsgs { get; set; }
         }
         public override string ToString()
         {
             var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new PassObj
             {
                 state = this.state,
-                actions = this.actions
+                actions = this.actions,
+                notifyMsgs = new List<string>()
             });
             return Newtonsoft.Json.JsonConvert.SerializeObject(new
             {

@@ -31,6 +31,7 @@ namespace Client
                     Console.WriteLine(ee.ageDisplay);
                     Console.WriteLine(ee.yearDisplay);
                     Console.WriteLine(ee.ageSumSave);
+                    Console.WriteLine(ee.childrenInfo);
                     Console.WriteLine(ee.selection);
 
                     var command = Console.ReadLine();

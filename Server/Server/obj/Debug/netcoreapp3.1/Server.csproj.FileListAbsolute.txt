@@ -19,3 +19,6 @@ F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Server\obj\Debug\netcoreapp3
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Server\obj\Debug\netcoreapp3.1\Server.genruntimeconfig.cache
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Server\bin\Debug\netcoreapp3.1\Data.json
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Server\obj\Debug\netcoreapp3.1\Server.csprojAssemblyReference.cache
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Server\bin\Debug\netcoreapp3.1\Client.exe
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Server\bin\Debug\netcoreapp3.1\Client.dll
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\Server\bin\Debug\netcoreapp3.1\Client.pdb

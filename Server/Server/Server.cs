@@ -159,19 +159,19 @@ namespace Server
                         {
                             return Employee.DoAction(ref this.rm, data, c);
                         }; break;
-                    //case "Employee-Love":
-                    //    {
-                    //        return Employee.Love(ref this.rm, data, c);
-                    //    }; break;
-                    //case "Employee-Marry":
-                    //    {
-                    //        return Employee.Marry(ref this.rm, data, c);
-                    //    }; break;
+                        //case "Employee-Love":
+                        //    {
+                        //        return Employee.Love(ref this.rm, data, c);
+                        //    }; break;
+                        //case "Employee-Marry":
+                        //    {
+                        //        return Employee.Marry(ref this.rm, data, c);
+                        //    }; break;
 
-                    //case "Employee-GetFirstBaby":
-                    //    {
-                    //        return Employee.GetFirstBaby(ref this.rm, data, c);
-                    //    }; break;
+                        //case "Employee-GetFirstBaby":
+                        //    {
+                        //        return Employee.GetFirstBaby(ref this.rm, data, c);
+                        //    }; break;
 
 
                 }
@@ -194,10 +194,61 @@ namespace Server
         {
             internal static string DoAction(ref Random rm, Data data, Command c)
             {
-                throw new NotImplementedException();
+                Client.Employee.PassObj passObj = Newtonsoft.Json.JsonConvert.DeserializeObject<Client.Employee.PassObj>(c.JsonValue);
+
+                passObj.state.age++;
+                passObj.state.year++;
+
+                if (passObj.state.fisrtBabyAge != null)
+                {
+                    passObj.state.fisrtBabyAge++;
+                }
+
+                if (passObj.state.secondBabyAge != null)
+                {
+                    passObj.state.secondBabyAge++;
+                }
+
+                if (passObj.state.thirdBabyAge != null)
+                {
+                    passObj.state.thirdBabyAge++;
+                }
+
+                if (passObj.state.fourthBabyAge != null)
+                {
+                    passObj.state.fourthBabyAge++;
+                }
+
+                if (passObj.actions.Contains("Employee-Love"))
+                {
+                    return Love(ref rm, data, c, ref passObj);
+                }
+                else if (passObj.actions.Contains("Employee-Marry"))
+                {
+                    return Marry(ref rm, data, c, ref passObj);
+                }
+                else if (passObj.actions.Contains("Employee-Marry"))
+                {
+                    return Marry(ref rm, data, c, ref passObj);
+                }
+                else if (passObj.actions.Contains("Employee-GetFirstBaby"))
+                {
+                    return GetFirstBaby(ref rm, data, c, ref passObj);
+                }
+                else
+                {
+                    Console.WriteLine($"以下这些命令不知如何处理！");
+                    foreach (var item in passObj.actions)
+                    {
+                        Console.WriteLine($"    {item}");
+                    }
+                    Console.WriteLine($"此致");
+                    return "";
+                }
+                //throw new NotImplementedException();
             }
 
-            internal static string GetFirstBaby(ref Random rm, Data data, Command c)
+            internal static string GetFirstBaby(ref Random rm, Data data, Command c, ref Client.Employee.PassObj passObj)
             {
                 var govementPosition = data.govementPosition.Last();
                 var successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.375 + 0.425;
@@ -225,13 +276,20 @@ namespace Server
                     }
                 }
                 double salary = Math.Cos(govementPosition / 100 * Math.PI) * 0.5 + 1;//
+
+                passObj.notifyMsgs.Add($"打工收入，获得{salary.ToString("f2")}金币；");
+                passObj.state.sumSave += salary;
                 if (rm.NextDouble() < successLimet)
                 {
-                    return Newtonsoft.Json.JsonConvert.SerializeObject(new { result = "getfirstbaby-success", employerAction = employerAction, salary = salary, cost = cost }); ;
+                    passObj.state.fisrtBabyAge = 0;
+                    passObj.state.canGetSecondBaby = true;
+                    passObj.state.canGetFirstBaby = false;
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
                 }
                 else
                 {
-                    return Newtonsoft.Json.JsonConvert.SerializeObject(new { result = "getfirstbaby-failure", employerAction = employerAction, salary = salary, cost = cost }); ;
+
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
                 }
             }
 
@@ -241,8 +299,14 @@ namespace Server
             /// <param name="data"></param>
             /// <param name="c"></param>
             /// <returns></returns>
-            internal static string Love(ref Random rm, Data data, Command c)
+            internal static string Love(ref Random rm, Data data, Command c, ref Client.Employee.PassObj passObj)
             {
+                if (passObj.state.canLove) { }
+                else
+                {
+                    return "";
+                }
+                //Client.Employee.PassObj passObj = Newtonsoft.Json.JsonConvert.DeserializeObject<Client.Employee.PassObj>(c.JsonValue);
                 /*
                  * 我们假设员工的恋爱成功率是受govementPosition影响的 
                  */
@@ -312,19 +376,28 @@ namespace Server
                 }
 
                 double salary = Math.Cos(govementPosition / 100 * Math.PI) * 0.5 + 1;//
+                passObj.state.sumSave += salary;
                 {
                     //恋爱、政府、企业主对打工收入的影响。
                 }
                 // var employorIndex = rm.Next(0, Employer.employerStrategyCount);
 
 
+
                 if (rm.NextDouble() < successLimet)
                 {
-                    return Newtonsoft.Json.JsonConvert.SerializeObject(new { result = "love-success", employerAction = employerAction, salary = salary }); ;
+                    passObj.notifyMsgs.Add("你恋爱成功了！");
+                    passObj.notifyMsgs.Add("你开启了新技能--结婚！");
+                    passObj.actions = new List<string>();
+                    passObj.state.canLove = false;
+                    passObj.state.canBeMarried = true;
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(passObj); ;
                 }
                 else
                 {
-                    return Newtonsoft.Json.JsonConvert.SerializeObject(new { result = "love-failure", employerAction = employerAction, salary = salary }); ;
+                    passObj.notifyMsgs.Add("你恋爱失败了，被甩了！");
+                    passObj.notifyMsgs.Add("再接再厉！");
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(passObj); ;
                 }
             }
             /// <summary>
@@ -333,121 +406,137 @@ namespace Server
             /// <param name="data"></param>
             /// <param name="c"></param>
             /// <returns></returns>
-            internal static string Marry(ref Random rm, Data data, Command c)
+            internal static string Marry(ref Random rm, Data data, Command c, ref Client.Employee.PassObj passObj)
             {
-                var marryCondition = Newtonsoft.Json.JsonConvert.DeserializeObject<MarryCondition>(c.JsonValue);
-                /*
-                 * 我们假设员工的恋爱成功率是受govementPosition影响的 
-                 */
                 var govementPosition = data.govementPosition.Last();
+                double salary = Math.Cos(govementPosition / 100 * Math.PI) * 0.5 + 1;//
 
-                //正常那么恋爱成功率为0.05~0.8
-                var successLimit = Math.Sin((govementPosition - 50) / 100 * Math.PI) * 0.2 + 0.7;
-
-                var sumActionCount = data.employerActions.Sum(item => item.Count);
-
-                short employerAction = -1;
-
-
-
-                if (sumActionCount > 0)
-                {
-                    var randPosition = rm.Next(sumActionCount);
-                    for (int i = 0; i < data.employerActions.Count; i++)
-                    {
-                        if (randPosition >= data.employerActions[i].Count)
-                        {
-                            randPosition -= data.employerActions[i].Count;
-                            continue;
-                        }
-                        else
-                        {
-                            employerAction = data.employerActions[i][randPosition];
-                            break;
-                        }
-                    }
-                }
-
-                if (employerAction == 1)
-                {
-                    //打工的时候，想谈恋爱，遇到了扯淡的996是福报论，那么恋爱成功率变为了0.05~0.7
-                    // successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.325 + 0.375;
-
-                }
-                else if (employerAction == 2)
-                {
-                    //打工的时候，想谈恋爱，遇到了单位只招年轻人，暂时假设，其不对恋爱成功率进行影响
-
-                }
-                else if (employerAction == 3)
-                {
-                    //打工的时候，想谈恋爱，遇到了老板招聘时，还歧视未婚未育女性，那么恋爱成功率变为了0.05~0.5
-                    //  successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.225 + 0.275;
-                }
-                else if (employerAction == 4)
-                {
-                    //打工的时候，想谈恋爱，遇到了老板引进新技术时，成功时
-                    //  successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.225 + 0.275;
-                }
-                else if (employerAction == 5)
-                {
-                    //打工的时候，想谈恋爱，遇到了老板引进新技术时，失败时，0.05~0.7
-                    // successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.325 + 0.375;
-                }
-                else if (employerAction == 6)
-                {
-                    //打工的时候，遇上老板转移产业，反而有助于提升恋爱率0.05~0.85
-                    //successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.4 + 0.45;
-
-                }
-                else if (employerAction == 7)
-                {
-                    //打工的时候，遇上老板提高福利，应该是有利于提升恋爱成功率的。0.1~0.9
-                    //successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.4 + 0.5;
-                }
-                // var employorIndex = rm.Next(0, Employer.employerStrategyCount);
-
-                double salary = Math.Cos(govementPosition / 100 * Math.PI) * 0.5 + 1;
+                passObj.state.sumSave += salary;
                 {
                     //恋爱、政府、企业主对打工收入的影响。
                 }
-                //嫁妆
-                double dowry;
-                if (govementPosition < 50)
-                {
-                    dowry = (Math.Cos(govementPosition / 100 * Math.PI) * 2 + 1) * data.housePrice;
+                passObj.notifyMsgs.Add($"你获得了打工的薪水{salary.ToString("f2")}金币");
 
-                }
-                else
+                if (passObj.state.sumSave >= data.housePrice * 2)
                 {
-                    dowry = (Math.Cos(govementPosition / 100 * Math.PI) * 1 + 1) * data.housePrice;
-                }
-                {
-                    //政府、企业对嫁妆的影响。
-                }
+                    //  var marryCondition = Newtonsoft.Json.JsonConvert.DeserializeObject<MarryCondition>(c.JsonValue);
+                    /*
+                     * 我们假设员工的恋爱成功率是受govementPosition影响的 
+                     */
+                    //var govementPosition = data.govementPosition.Last();
 
-                if (rm.NextDouble() < successLimit)
-                {
+                    //正常那么恋爱成功率为0.05~0.8
+                    var successLimit = Math.Sin((govementPosition - 50) / 100 * Math.PI) * 0.2 + 0.7;
 
-                    if (marryCondition.sumSave >= data.housePrice * 2)
+                    var sumActionCount = data.employerActions.Sum(item => item.Count);
+
+                    short employerAction = -1;
+
+
+
+                    if (sumActionCount > 0)
                     {
+                        var randPosition = rm.Next(sumActionCount);
+                        for (int i = 0; i < data.employerActions.Count; i++)
+                        {
+                            if (randPosition >= data.employerActions[i].Count)
+                            {
+                                randPosition -= data.employerActions[i].Count;
+                                continue;
+                            }
+                            else
+                            {
+                                employerAction = data.employerActions[i][randPosition];
+                                break;
+                            }
+                        }
+                    }
 
-                        var obj = new { result = "marry-success", employerAction = employerAction, salary = salary, dowry = dowry, housePrice = data.housePrice };
-                        return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+                    if (employerAction == 1)
+                    {
+                        //打工的时候，想谈恋爱，遇到了扯淡的996是福报论，那么恋爱成功率变为了0.05~0.7
+                        // successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.325 + 0.375;
+
+                    }
+                    else if (employerAction == 2)
+                    {
+                        //打工的时候，想谈恋爱，遇到了单位只招年轻人，暂时假设，其不对恋爱成功率进行影响
+
+                    }
+                    else if (employerAction == 3)
+                    {
+                        //打工的时候，想谈恋爱，遇到了老板招聘时，还歧视未婚未育女性，那么恋爱成功率变为了0.05~0.5
+                        //  successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.225 + 0.275;
+                    }
+                    else if (employerAction == 4)
+                    {
+                        //打工的时候，想谈恋爱，遇到了老板引进新技术时，成功时
+                        //  successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.225 + 0.275;
+                    }
+                    else if (employerAction == 5)
+                    {
+                        //打工的时候，想谈恋爱，遇到了老板引进新技术时，失败时，0.05~0.7
+                        // successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.325 + 0.375;
+                    }
+                    else if (employerAction == 6)
+                    {
+                        //打工的时候，遇上老板转移产业，反而有助于提升恋爱率0.05~0.85
+                        //successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.4 + 0.45;
+
+                    }
+                    else if (employerAction == 7)
+                    {
+                        //打工的时候，遇上老板提高福利，应该是有利于提升恋爱成功率的。0.1~0.9
+                        //successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.4 + 0.5;
+                    }
+                    // var employorIndex = rm.Next(0, Employer.employerStrategyCount);
+
+
+
+
+                    //嫁妆
+
+
+                    if (rm.NextDouble() < successLimit)
+                    {
+                        double dowry;
+                        if (govementPosition < 50)
+                        {
+                            dowry = (Math.Cos(govementPosition / 100 * Math.PI) * 2 + 1) * data.housePrice;
+
+                        }
+                        else
+                        {
+                            dowry = (Math.Cos(govementPosition / 100 * Math.PI) * 1 + 1) * data.housePrice;
+                        }
+                        {
+                            //政府、企业对嫁妆的影响。
+                        }
+                        passObj.state.sumSave -= data.housePrice * 2;
+                        passObj.notifyMsgs.Add($"彩礼和房价总共花费{(data.housePrice * 2).ToString("f2")}金币！");
+
+                        passObj.state.sumSave += dowry;
+                        passObj.notifyMsgs.Add($"你获得了{dowry.ToString("f2")}金币作为长辈对你结婚的奖赏！");
+
+
+
+                        passObj.state.canBeMarried = false;
+                        passObj.state.canGetFirstBaby = true;
+                        return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
                     }
                     else
                     {
-                        var obj = new { result = "marry-failure-bride", employerAction = employerAction, salary = salary, dowry = dowry, housePrice = data.housePrice };
-                        return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+                        passObj.notifyMsgs.Add($"结婚还是失败！");
+                        return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
                     }
-
-                    //return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
                 }
                 else
                 {
-                    var obj = new { result = "marry-failure", employerAction = employerAction, salary = salary, dowry = dowry, housePrice = data.housePrice };
-                    return Newtonsoft.Json.JsonConvert.SerializeObject(obj);
+                    passObj.notifyMsgs.Add($"你的储蓄不够房价+彩礼{data.housePrice * 2},结婚失败！");
+                    passObj.notifyMsgs.Add("再接再厉！");
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(passObj); ;
                 }
+
             }
 
 
