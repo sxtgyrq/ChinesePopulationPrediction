@@ -199,9 +199,15 @@ namespace Server
                 passObj.state.age++;
                 passObj.state.year++;
 
-                if (passObj.state.fisrtBabyAge != null)
+                if (passObj.state.firstBabyAge != null)
                 {
-                    passObj.state.fisrtBabyAge++;
+                    passObj.state.firstBabyAge++;
+
+                    setChildEducate(passObj.state.firstBabyAge, ref passObj,data);
+                    //if (passObj.state.firstBabyAge > 3) 
+                    //{
+                    //    if (passObj.actions.Contains("Employee-Love"))
+                    //}
                 }
 
                 if (passObj.state.secondBabyAge != null)
@@ -226,7 +232,7 @@ namespace Server
                 else if (passObj.actions.Contains("Employee-Marry"))
                 {
                     return Marry(ref rm, data, c, ref passObj);
-                } 
+                }
                 else if (passObj.actions.Contains("Employee-GetFirstBaby"))
                 {
                     return GetFirstBaby(ref rm, data, c, ref passObj);
@@ -235,6 +241,18 @@ namespace Server
                 {
                     return GetSecondBaby(ref rm, data, c, ref passObj);
                 }
+                else if (passObj.actions.Contains("Employee-GetThirdBaby"))
+                {
+                    return GetThirdBaby(ref rm, data, c, ref passObj);
+                }
+                else if (passObj.actions.Contains("Employee-GetFourthBaby"))
+                {
+                    return GetFourthBaby(ref rm, data, c, ref passObj);
+                }
+                //else if (passObj.actions.Contains("Employee-GetFourthBaby")) 
+                //{
+                    
+                //}
                 else
                 {
                     Console.WriteLine($"以下这些命令不知如何处理！");
@@ -246,6 +264,111 @@ namespace Server
                     return "";
                 }
                 //throw new NotImplementedException();
+            }
+
+            private static void setChildEducate(int? firstBabyAge, ref Client.Employee.PassObj passObj, Data data)
+            {
+                if (firstBabyAge > 3)
+                {
+                    if (passObj.actions.Contains("Employee-Educate-Perfect")) 
+                    {
+                        //var price = 0;
+                        //for()
+                     //   passObj.state.sumSave-4*data.educateBasePrice
+                    }
+
+                   // if (passObj.actions.Contains("Employee-Love"))
+                }
+                throw new NotImplementedException();
+            }
+
+            private static string GetFourthBaby(ref Random rm, Data data, Command c, ref Client.Employee.PassObj passObj)
+            {
+                var govementPosition = data.govementPosition.Last();
+                var successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.375 + 0.425;
+
+                var cost = data.housePrice * 0.2;
+                var sumActionCount = data.employerActions.Sum(item => item.Count);
+
+                short employerAction = -1;
+
+                if (sumActionCount > 0)
+                {
+                    var randPosition = rm.Next(sumActionCount);
+                    for (int i = 0; i < data.employerActions.Count; i++)
+                    {
+                        if (randPosition >= data.employerActions[i].Count)
+                        {
+                            randPosition -= data.employerActions[i].Count;
+                            continue;
+                        }
+                        else
+                        {
+                            employerAction = data.employerActions[i][randPosition];
+                            break;
+                        }
+                    }
+                }
+                double salary = Math.Cos(govementPosition / 100 * Math.PI) * 0.5 + 1;//
+
+                passObj.notifyMsgs.Add($"打工收入，获得{salary.ToString("f2")}金币；");
+                passObj.state.sumSave += salary;
+                if (rm.NextDouble() < successLimet)
+                {
+                    passObj.state.canGetFourthBaby = false;
+                    passObj.state.fourthBabyAge = 0;
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
+                }
+                else
+                {
+
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
+                }
+            }
+
+            private static string GetThirdBaby(ref Random rm, Data data, Command c, ref Client.Employee.PassObj passObj)
+            {
+                var govementPosition = data.govementPosition.Last();
+                var successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.375 + 0.425;
+
+                var cost = data.housePrice * 0.2;
+                var sumActionCount = data.employerActions.Sum(item => item.Count);
+
+                short employerAction = -1;
+
+                if (sumActionCount > 0)
+                {
+                    var randPosition = rm.Next(sumActionCount);
+                    for (int i = 0; i < data.employerActions.Count; i++)
+                    {
+                        if (randPosition >= data.employerActions[i].Count)
+                        {
+                            randPosition -= data.employerActions[i].Count;
+                            continue;
+                        }
+                        else
+                        {
+                            employerAction = data.employerActions[i][randPosition];
+                            break;
+                        }
+                    }
+                }
+                double salary = Math.Cos(govementPosition / 100 * Math.PI) * 0.5 + 1;//
+
+                passObj.notifyMsgs.Add($"打工收入，获得{salary.ToString("f2")}金币；");
+                passObj.state.sumSave += salary;
+                if (rm.NextDouble() < successLimet)
+                {
+                    passObj.state.canGetThirdBaby = false;
+                    passObj.state.canGetFourthBaby = true;
+                    passObj.state.thirdBabyAge = 0;
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
+                }
+                else
+                {
+
+                    return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
+                }
             }
 
             private static string GetSecondBaby(ref Random rm, Data data, Command c, ref Client.Employee.PassObj passObj)
@@ -326,7 +449,7 @@ namespace Server
                 passObj.state.sumSave += salary;
                 if (rm.NextDouble() < successLimet)
                 {
-                    passObj.state.fisrtBabyAge = 0;
+                    passObj.state.firstBabyAge = 0;
                     passObj.state.canGetSecondBaby = true;
                     passObj.state.canGetFirstBaby = false;
                     passObj.state.canPlayWithChildren = true;

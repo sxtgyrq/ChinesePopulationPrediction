@@ -29,6 +29,8 @@ namespace Server
         /// <summary>
         /// 过去24小时教育花费记录表
         /// 用于计算教育花费
+        /// 24小时内10-1名，接受极好教育
+        /// 这个存储的是比例。真实的价格为value*Base
         /// </summary>
         public List<List<double>> educationCost { get; set; }
         /// <summary>

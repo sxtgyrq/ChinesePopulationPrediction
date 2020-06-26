@@ -28,7 +28,7 @@ namespace Client
 
 
 
-            public int? fisrtBabyAge = null;
+            public int? firstBabyAge = null;
             public int? secondBabyAge = null;
             public int? thirdBabyAge = null;
             public int? fourthBabyAge = null;
@@ -121,15 +121,15 @@ namespace Client
             get
             {
                 var msg = "";
-                if (this.state.fisrtBabyAge != null)
+                if (this.state.firstBabyAge != null)
                 {
-                    if (this.state.fisrtBabyAge == 0)
+                    if (this.state.firstBabyAge == 0)
                     {
                         msg += "您第一个孩子刚刚出生；";
                     }
                     else
                     {
-                        msg += $"您第一个个孩子{this.state.fisrtBabyAge}岁了！";
+                        msg += $"您第一个个孩子{this.state.firstBabyAge}岁了！";
                     }
                     msg += Environment.NewLine;
                 }
@@ -276,15 +276,58 @@ namespace Client
                             }
                         }
                     }; break;
-                case "7":
+                case "71":
                     {
-                        if (this.state.canPlayWithChildren)
+                        if (this.state.canEducate)
                         {
+                            var action = "Employee-Educate-Normal";
+                            if (this.actions.Contains(action))
+                            {
+
+                            }
+                            else
+                            {
+                                this.actions.Add(action);
+                            }
                             //var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new { canStrugle = this.canStrugle });
                             //msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-PlayWithChildren" });
                         }
                     }; break;
-                case "8":
+                case "72":
+                    {
+                        if (this.state.canEducate)
+                        {
+                            var action = "Employee-Educate-Good";
+                            if (this.actions.Contains(action))
+                            {
+
+                            }
+                            else
+                            {
+                                this.actions.Add(action);
+                            }
+                            //var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new { canStrugle = this.canStrugle });
+                            //msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-PlayWithChildren" });
+                        }
+                    }; break;
+                case "73":
+                    {
+                        if (this.state.canEducate)
+                        {
+                            var action = "Employee-Educate-Perfect";
+                            if (this.actions.Contains(action))
+                            {
+                                var educate=
+                            }
+                            else
+                            {
+                                this.actions.Add(action);
+                            }
+                            //var JsonValue = Newtonsoft.Json.JsonConvert.SerializeObject(new { canStrugle = this.canStrugle });
+                            //msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-PlayWithChildren" });
+                        }
+                    }; break;
+                case "333":
                     {
                         if (this.state.canStrugle)
                         {
@@ -438,7 +481,7 @@ namespace Client
             var rm = Math.Abs(DateTime.Now.GetHashCode()) % 3;
             this.state.age = 22 + rm;
 
-            this.state.fisrtBabyAge = null;
+            this.state.firstBabyAge = null;
             this.state.secondBabyAge = null;
             this.state.thirdBabyAge = null;
             this.state.fourthBabyAge = null;
