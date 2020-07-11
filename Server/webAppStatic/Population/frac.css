@@ -1,0 +1,94 @@
+﻿.frac {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    letter-spacing: 0.001em;
+    text-align: center;
+}
+
+    .frac > span {
+        display: block;
+        padding: 0.1em;
+    }
+
+    .frac span.bottom {
+        border-top: thin solid white;
+    }
+
+    .frac span.symbol {
+        display: none;
+    }
+
+
+.myButton {
+    box-shadow: -9px 8px 6px -1px rgba(24, 171, 41, 0.4);
+    background-color: transparent;
+    border-radius: 6px;
+    border: 2px solid #18ab29;
+    display: inline-block;
+    cursor: pointer;
+    color: #ffffff;
+    font-family: 'Microsoft YaHei';
+    font-size: 17px;
+    font-weight: bold;
+    padding: 10px 10px;
+    text-decoration: none;
+    text-shadow: -2px 2px 4px #2f6627;
+}
+
+    .myButton:hover {
+        background-color: transparent;
+    }
+
+    .myButton:active {
+        position: relative;
+        top: 1px;
+    }
+
+    .myButton.education {
+        border-width: 1px;
+        margin-left: 0px;
+        margin-right: 0px;
+        font-size: 12px;
+    }
+
+    .myButton.hide {
+        display: none;
+    }
+
+    .myButton.selected {
+        box-shadow: -9px 8px 6px -1px rgba(255, 12, 0, 0.4);
+        animation: example 2s infinite;
+    }
+
+    .myButton.BtnHideWindow {
+        border-width: 1px;
+        border-color: white;
+    }
+
+@keyframes example {
+    0% {
+        border-color: red;
+        box-shadow: -9px 8px 6px -1px rgba(255, 0, 0, 0.4);
+    }
+
+    25% {
+        border-color: yellow;
+        box-shadow: -9px 8px 6px -1px rgba(255, 255, 0, 0.4);
+    }
+
+    50% {
+        border-color: green;
+        box-shadow: -9px 8px 6px -1px rgba(0, 128, 0, 0.4);
+    }
+
+    75% {
+        border-color: blue;
+        box-shadow: -9px 8px 6px -1px rgba(0, 0, 255, 0.4);
+    }
+
+    100% {
+        border-color: red;
+        box-shadow: -9px 8px 6px -1px rgba(255, 0, 0, 0.4);
+    }
+}

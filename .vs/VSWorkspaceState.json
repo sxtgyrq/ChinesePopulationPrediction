@@ -1,8 +1,9 @@
 {
   "ExpandedNodes": [
     "",
-    "\\Server"
+    "\\Server",
+    "\\Server\\webAppStatic\\Population"
   ],
-  "SelectedNode": "\\Server\\Server.sln",
+  "SelectedNode": "\\Server\\BitCoinQuestionPage.css",
   "PreviewInSolutionExplorer": false
 }
