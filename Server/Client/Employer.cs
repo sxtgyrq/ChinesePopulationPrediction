@@ -38,6 +38,10 @@ namespace Client
             public int age = 22;
 
             public int year { get; set; }
+
+            public Dictionary<int, List<double>> educationCost { get; set; }
+
+            public Dictionary<int, List<double>> educationScore { get; set; }
         }
         public State state { get; set; }
 
@@ -317,7 +321,7 @@ namespace Client
                             var action = "Employee-Educate-Perfect";
                             if (this.actions.Contains(action))
                             {
-                                var educate=
+                                //var educate =
                             }
                             else
                             {
@@ -327,11 +331,35 @@ namespace Client
                             //msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-PlayWithChildren" });
                         }
                     }; break;
-                case "333":
+                case "81":
                     {
                         if (this.state.canStrugle)
                         {
-
+                            var action = "Employee-Strugle";
+                            if (this.actions.Contains(action))
+                            {
+                                //var educate =
+                            }
+                            else
+                            {
+                                this.actions.Add(action);
+                            }
+                            //msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-Strugle" });
+                        }
+                    }; break;
+                case "82":
+                    {
+                        if (this.state.canPlayWithChildren)
+                        {
+                            var action = "Employee-PlayWith-Children";
+                            if (this.actions.Contains(action))
+                            {
+                                //var educate =
+                            }
+                            else
+                            {
+                                this.actions.Add(action);
+                            }
                             //msg = Newtonsoft.Json.JsonConvert.SerializeObject(new { Type = "Employee-Strugle" });
                         }
                     }; break;
@@ -348,10 +376,10 @@ namespace Client
             }
             if (command == "Next")
             {
-                if (this.actions.Count != 0)
+                //if ( )
                 {
                     msg = this.ToString();
-                    var ip = "127.0.0.1";
+                    var ip = "10.80.52.218";
                     int port = 20701;
                     using (TcpClient client = new TcpClient(ip, port))
                     {
@@ -390,6 +418,8 @@ namespace Client
                         }
                         client.Close();
                     }
+
+
                 }
 
 
@@ -485,6 +515,9 @@ namespace Client
             this.state.secondBabyAge = null;
             this.state.thirdBabyAge = null;
             this.state.fourthBabyAge = null;
+
+            this.state.educationCost = new Dictionary<int, List<double>>();
+            this.state.educationScore = new Dictionary<int, List<double>>();
         }
 
 

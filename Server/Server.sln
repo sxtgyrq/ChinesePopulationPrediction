@@ -5,7 +5,24 @@ VisualStudioVersion = 16.0.30002.166
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Server", "Server\Server.csproj", "{C8B26199-BD34-4546-8FC2-F2ACCC70C25F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{FD12C531-E694-4CAB-8205-66C141AE532D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{FD12C531-E694-4CAB-8205-66C141AE532D}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{AADA7446-DDCA-49F1-8AB0-A9EFFCBB9744}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Population", "Population", "{7AE38244-C053-4951-B4C9-283AFD1D22EF}"
+	ProjectSection(SolutionItems) = preProject
+		BitCoinQuestionPage.css = BitCoinQuestionPage.css
+		Do.js = Do.js
+		frac.css = frac.css
+		Main.html = Main.html
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Scripts", "Scripts", "{2DB2C7E2-631E-4623-A416-3E6C9E37F435}"
+	ProjectSection(SolutionItems) = preProject
+		jquery-3.4.1.js = jquery-3.4.1.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NewFolder1", "NewFolder1", "{128A7DD2-0A30-4362-9FDA-04461C9FC918}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -24,6 +41,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7AE38244-C053-4951-B4C9-283AFD1D22EF} = {AADA7446-DDCA-49F1-8AB0-A9EFFCBB9744}
+		{2DB2C7E2-631E-4623-A416-3E6C9E37F435} = {AADA7446-DDCA-49F1-8AB0-A9EFFCBB9744}
+		{128A7DD2-0A30-4362-9FDA-04461C9FC918} = {2DB2C7E2-631E-4623-A416-3E6C9E37F435}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2C2C5077-5741-4C97-94A8-CCE300568DC6}

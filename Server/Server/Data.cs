@@ -75,7 +75,7 @@ namespace Server
         /// <summary>
         /// 教育基本价格
         /// </summary>
-        public double educateBasePrice { get; set; }
+        //public double educateBasePrice { get; set; }
 
     }
 }

@@ -1,0 +1,168 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>生孩策略</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+    <title></title>
+    <!--<link href="style/frac.css" rel="stylesheet" />-->
+    <link href="frac.css" rel="stylesheet" />
+    <link href="BitCoinQuestionPage.css" rel="stylesheet" />
+
+    <style>
+        .msg {
+            text-align: center;
+            border: 1px solid #4cff00;
+            padding: 5px;
+            margin: 5px;
+            background-color: blue;
+            color: white;
+        }
+
+        .error {
+            text-align: center;
+            border: 1px solid #4cff00;
+            padding: 5px;
+            margin: 5px;
+            background-color: yellow;
+            color: red;
+        }
+
+        @font-face {
+        }
+
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            height: 30px;
+            border-radius: 12px;
+            margin-bottom: 5px;
+            float: right;
+        }
+    </style>
+    <!--<script src="Scripts/jquery-3.4.1.js"></script>-->
+    <script src="../Scripts/jquery-3.4.1.js"></script>
+    <!--<script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+        tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+        });
+    </script>
+    <script type="text/javascript" async src="Scripts/MathJax/MathJax.js?config=TeX-AMS_CHTML"></script>-->
+    <!--<script src="Js/CommonJs.js"></script>-->
+    <!--<script src="Js/Kobe.js?xx=220211"></script>-->
+    <script src="../Scripts/jquery-3.4.1.js"></script>
+
+    <script src="../Js/CommonJs_Copy.js"></script>
+    <script src="Do.js"></script>
+</head>
+<body style="overflow:hidden">
+    <!--<audio id="musicBackground" loop="loop">
+        <source src="sound/kobe.ogg" type="audio/ogg" />
+        <source src="sound/kobe.mp3" type="audio/mpeg" />
+    </audio>-->
+    <img src="Img/HtmlTitle.png" style="display:none;" />
+    <div style="position:absolute;width:calc(100% - 4px);height:96px;border:solid 2px #000000;left:0px;top:0px;border-top-left-radius:10px;border-top-right-radius:10px;overflow:hidden;text-align:center;vertical-align:middle;display:inline-block;line-height:96px;">
+        <div style="width:100%;height:100%;position:relative;">
+            <div style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:left;">
+                <img id="imgOfIcon" style="margin-left:calc(200%);" src="Img/icon.gif" />
+            </div>
+            <div id="notifyMsg" style="position:absolute;top:0px;left:0px;width:100%;height:100%;text-align:center;vertical-align:middle;display:inline-block;">
+
+            </div>
+        </div>
+    </div>
+    <div id="containerOfMain" style="position:absolute;width:calc(100% - 4px);height:calc(100% - 104px);border:solid 2px #000000;left:0px;top:100px;border-bottom-left-radius:10px;border-bottom-right-radius:10px;z-index:1;">
+        <div id="askAndAnswer" class="askAndAnswer">
+            aaaaaaaaaaaaaaaa
+        </div>
+        <div id="btns" style="height:calc(46px);width:calc(100% - 2px) ;border:none;position:absolute;top:calc(100% - 48px);border-bottom-left-radius:10px;border-bottom-right-radius:10px;">
+            <div class="button">继续</div>
+            <div class="button" style="background-color:orangered;">纠错</div>
+        </div>
+        <div style="position:absolute;top:3px;left:4px;background:rgba(255, 0, 0, 0.99);"> <span>得分</span><span id="scoreSpan" style="color:#eff8f2">100</span></div>
+
+    </div>
+
+    <div id="dialog" class="dialogPromt" hidden>
+        <div class="dialogPromtfirstchild">1111111111</div>
+        <input class="dialogPromtsecondchild" type="text" />
+        <input class="dialogPromtthirdchild" type="button" />
+    </div>
+
+    <div id="selection" class="selection show">
+        <div>
+            <div>
+                <a href="#" class="myButton selected">奋斗</a>
+            </div>
+            <div>
+                <a href="#" class="myButton">恋爱</a>
+            </div>
+            <div>
+                <a href="#" class="myButton">结婚</a>
+            </div>
+            <div>
+                <a href="#" class="myButton">生一胎</a>
+            </div>
+
+            <div>
+                <a href="#" class="myButton hide">亲子</a>
+            </div>
+            <div>
+                <a href="#" class="myButton education selected">顶级教育</a>
+                <a href="#" class="myButton education">良好教育</a>
+                <a href="#" class="myButton education">普通教育</a>
+            </div>
+
+            <div>
+                <a href="#" class="myButton">单职</a>
+            </div>
+            <div>
+                <a href="#" class="myButton BtnHideWindow">确认</a>  <a href="#" class="myButton">取消</a>
+            </div>
+        </div>
+
+    </div>
+    <!--<div id="selection" class="selection hide">
+        <div>
+            <div>
+                <a href="#" class="myButton">奋斗</a>
+            </div>
+            <div>
+                <a href="#" class="myButton">恋爱</a>
+            </div>
+            <div>
+                <a href="#" class="myButton">结婚</a>
+            </div>
+            <div>
+                <a href="#" class="myButton">生一胎</a>
+            </div>
+
+            <div>
+                <a href="#" class="myButton hide">亲子</a>
+            </div>
+            <div>
+                <a href="#" class="myButton education selected">顶级教育</a>
+                <a href="#" class="myButton education">良好教育</a>
+                <a href="#" class="myButton education">普通教育</a>
+            </div>
+
+            <div>
+                <a href="#" class="myButton">单职</a>
+            </div>
+            <div>
+                <a href="#" class="myButton">确认</a>  <a href="#" class="myButton">取消</a>
+            </div>
+        </div>
+
+    </div>-->
+    <div id="selection" class="selection hide">
+    </div>
+</body>
+</html>

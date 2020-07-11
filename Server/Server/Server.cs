@@ -199,20 +199,9 @@ namespace Server
                 passObj.state.age++;
                 passObj.state.year++;
 
-                if (passObj.state.firstBabyAge != null)
+                if (passObj.state.fourthBabyAge != null)
                 {
-                    passObj.state.firstBabyAge++;
-
-                    setChildEducate(passObj.state.firstBabyAge, ref passObj,data);
-                    //if (passObj.state.firstBabyAge > 3) 
-                    //{
-                    //    if (passObj.actions.Contains("Employee-Love"))
-                    //}
-                }
-
-                if (passObj.state.secondBabyAge != null)
-                {
-                    passObj.state.secondBabyAge++;
+                    passObj.state.fourthBabyAge++;
                 }
 
                 if (passObj.state.thirdBabyAge != null)
@@ -220,10 +209,27 @@ namespace Server
                     passObj.state.thirdBabyAge++;
                 }
 
-                if (passObj.state.fourthBabyAge != null)
+                if (passObj.state.secondBabyAge != null)
                 {
-                    passObj.state.fourthBabyAge++;
+                    passObj.state.secondBabyAge++;
                 }
+
+                if (passObj.state.firstBabyAge != null)
+                {
+                    passObj.state.firstBabyAge++;
+
+                    setChildEducate(passObj.state.firstBabyAge, 1, ref passObj, data);
+                    //if (passObj.state.firstBabyAge > 3) 
+                    //{
+                    //    if (passObj.actions.Contains("Employee-Love"))
+                    //}
+                }
+
+
+
+
+
+
 
                 if (passObj.actions.Contains("Employee-Love"))
                 {
@@ -251,7 +257,7 @@ namespace Server
                 }
                 //else if (passObj.actions.Contains("Employee-GetFourthBaby")) 
                 //{
-                    
+
                 //}
                 else
                 {
@@ -266,18 +272,166 @@ namespace Server
                 //throw new NotImplementedException();
             }
 
-            private static void setChildEducate(int? firstBabyAge, ref Client.Employee.PassObj passObj, Data data)
+            private static void setChildEducate(int? babyAge, int babyIndex, ref Client.Employee.PassObj passObj, Data data)
             {
-                if (firstBabyAge > 3)
+                var selfPay = Math.Round(1.0 / 50 * data.govementPosition.Last(), 2);
+                var govementPay = 1 - selfPay;
+                //bool moneyIsNotEnought = false;
+                if (babyAge != null && babyAge.Value > 3)
                 {
-                    if (passObj.actions.Contains("Employee-Educate-Perfect")) 
+
+                    while (passObj.actions.Contains("Employee-Educate-Perfect"))
                     {
-                        //var price = 0;
-                        //for()
-                     //   passObj.state.sumSave-4*data.educateBasePrice
+                        List<double> prices = new List<double>();
+                        for (var i = 0; i < data.educationCost.Count; i++)
+                        {
+                            for (var j = 0; j < data.educationCost[i].Count; j++)
+                            {
+                                prices.Add(data.educationCost[i][j]);
+                            }
+                        }
+                        var newPrice = (prices.OrderByDescending(item => item)).ToList();
+
+                        double price = 0.01;
+
+                        if (prices.Count == 0)
+                        {
+                            price = 0.01;
+                        }
+                        else
+                        {
+                            //2% ~10%
+                            var p = -0.08 / 100 * data.govementPosition.Last() + 0.10;
+                            var indexV = Convert.ToInt32(Math.Floor(p * newPrice.Count));
+                            price = newPrice[indexV] + 0.01;
+                        }
+                        if (passObj.state.sumSave - (price * selfPay) >= 0)
+                        {
+                            passObj.state.sumSave -= (price * selfPay);
+                            passObj.state.educationCost[babyIndex].Add(price);
+                            passObj.notifyMsgs.Add($"您的第{babyIndex}个孩子接受到了优质教育，个人花费${(price * selfPay).ToString("f2")}金币");
+                            if (govementPay > 0)
+                            {
+                                passObj.notifyMsgs.Add($"您的第{babyIndex}个孩子接受到了优质教育，政府资助您${(price * govementPay).ToString("f2")}金币");
+                            }
+                            else if (govementPay < 0)
+                            {
+                                passObj.notifyMsgs.Add($"您的第{babyIndex}个孩子接受到了优质教育，您资助政府${(price * (-govementPay)).ToString("f2")}金币作为教育附加税。");
+                            }
+                            //    Console.WriteLine();
+
+                            return;
+                        }
+                        else
+                        {
+                            break;
+                        }
                     }
 
-                   // if (passObj.actions.Contains("Employee-Love"))
+                    while (passObj.actions.Contains("Employee-Educate-Good") || passObj.actions.Contains("Employee-Educate-Perfect"))
+                    {
+                        List<double> prices = new List<double>();
+                        for (var i = 0; i < data.educationCost.Count; i++)
+                        {
+                            for (var j = 0; j < data.educationCost[i].Count; j++)
+                            {
+                                prices.Add(data.educationCost[i][j]);
+                            }
+                        }
+                        var newPrice = (prices.OrderByDescending(item => item)).ToList();
+
+                        double price = 0.01;
+                        if (prices.Count == 0)
+                        {
+                            price = 0.01;
+                        }
+                        else
+                        {
+                            //98% ~10%
+                            var p = -0.88 / 100 * data.govementPosition.Last() + 0.98;
+                            var indexV = Convert.ToInt32(Math.Floor(p * newPrice.Count));
+                            price = newPrice[indexV] + 0.01;
+                        }
+
+
+                        if (passObj.state.sumSave - (price * selfPay) >= 0)
+                        {
+                            passObj.state.sumSave -= (price * selfPay);
+                            if (passObj.actions.Contains("Employee-Educate-Perfect"))
+                            {
+                                passObj.notifyMsgs.Add($"由于您的钱不够支持您的第{babyIndex}个孩子的顶级教育费用，他只能接受到了优质教育，个人花费${(price * selfPay).ToString("f2")}金币");
+                                if (govementPay > 0)
+                                {
+                                    passObj.notifyMsgs.Add($"由于您的钱不够支持您的第{babyIndex}个孩子的顶级教育费用，他只能接受到了优质教育，政府资助${(price * govementPay).ToString("f2")}金币");
+                                }
+                                else if (govementPay < 0)
+                                {
+                                    passObj.notifyMsgs.Add($"由于您的钱不够支持您的第{babyIndex}个孩子的顶级教育费用，他只能接受到了优质教育，您资助政府${(price * -govementPay).ToString("f2")}金币");
+                                }
+                            }
+                            else
+                            {
+                                passObj.notifyMsgs.Add($"由于您的第{babyIndex}个孩子接受到了优质教育，个人花费${(price * selfPay).ToString("f2")}金币");
+                                if (govementPay > 0)
+                                {
+                                    passObj.notifyMsgs.Add($"您的第{babyIndex}个孩子接受到了优质教育，政府资助${(price * govementPay).ToString("f2")}金币");
+                                }
+                                else if (govementPay < 0)
+                                {
+                                    passObj.notifyMsgs.Add($"您的第{babyIndex}个孩子接受到了优质教育，您资助政府${(price * -govementPay).ToString("f2")}金币");
+                                }
+                            }
+                            passObj.state.educationCost[babyIndex].Add(price);
+                            // Console.WriteLine($"您的第{babyIndex}个孩子接受到了良好教育，花费${price.ToString("f2")}金币");
+                            return;
+                        }
+                        else
+                        {
+
+                        }
+                        break;
+                    }
+
+                    while (true)
+                    {
+                        List<double> prices = new List<double>();
+                        for (var i = 0; i < data.educationCost.Count; i++)
+                        {
+                            for (var j = 0; j < data.educationCost[i].Count; j++)
+                            {
+                                prices.Add(data.educationCost[i][j]);
+                            }
+                        }
+                        var newPrice = (prices.OrderByDescending(item => item)).ToList();
+
+                        double price = 0.01;
+                        if (prices.Count == 0)
+                        {
+                            price = 0.01;
+                        }
+                        else
+                        {
+                            //98% ~10%
+                            //var p = -0.88 / 100 * data.govementPosition.Last() + 0.98;
+                            //var indexV = Convert.ToInt32(Math.Floor(p * newPrice.Count));
+                            price = data.govementPosition.Last() + 0.01;
+                        }
+
+                        passObj.state.sumSave -= price;
+                        if (passObj.actions.Contains("Employee-Educate-Perfect"))
+                        {
+                            passObj.notifyMsgs.Add($"由于您的钱不够支持您的第{babyIndex}个孩子的顶级教育费用，他只能接受到了普通教育，花费${price.ToString("f2")}金币");
+                        }
+                        else if (passObj.actions.Contains("Employee-Educate-Good"))
+                        {
+                            passObj.notifyMsgs.Add($"由于您的钱不够支持您的第{babyIndex}个孩子的优质教育费用，他只能接受到了普通教育，花费${price.ToString("f2")}金币");
+                        }
+                        passObj.state.educationCost[babyIndex].Add(price);
+                        Console.WriteLine($"您的第{babyIndex}个孩子接受到了普通教育，花费${price.ToString("f2")}金币");
+                        return;
+
+                        break;
+                    }
                 }
                 throw new NotImplementedException();
             }
@@ -317,6 +471,7 @@ namespace Server
                 {
                     passObj.state.canGetFourthBaby = false;
                     passObj.state.fourthBabyAge = 0;
+                    passObj.state.educationCost.Add(4, new List<double>());
                     return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
                 }
                 else
@@ -362,6 +517,7 @@ namespace Server
                     passObj.state.canGetThirdBaby = false;
                     passObj.state.canGetFourthBaby = true;
                     passObj.state.thirdBabyAge = 0;
+                    passObj.state.educationCost.Add(3, new List<double>());
                     return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
                 }
                 else
@@ -407,6 +563,7 @@ namespace Server
                     passObj.state.canGetSecondBaby = false;
                     passObj.state.canGetThirdBaby = true;
                     passObj.state.secondBabyAge = 0;
+                    passObj.state.educationCost.Add(2, new List<double>());
                     return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
                 }
                 else
@@ -454,6 +611,7 @@ namespace Server
                     passObj.state.canGetFirstBaby = false;
                     passObj.state.canPlayWithChildren = true;
                     passObj.state.canEducate = true;
+                    passObj.state.educationCost.Add(1, new List<double>());
                     return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
                 }
                 else
@@ -744,35 +902,13 @@ namespace Server
                 //打工收入，对教育成本的影响，类似于收入增加，个人所得税增加。这里表现为教育成本增加
                 if (data.employteenSumEarn.Sum() > 24 * 30)
                 {
-                    if (rm.Next(99) < data.govementPosition.Last())
-                    {
-                        //政府偏向资本时，且来百姓有钱时，政府更偏向于提高房价
-                        data.housePrice += 0.01;
-                        data.housePrice *= 1.01;
-                    }
-                    else
-                    {
-                        //政府偏向人民使，且百姓有钱时，政府更偏向于调高教育质量
-                        //所以教育资本会增加
-                        data.educateBasePrice += 0.01;
-                        data.educateBasePrice *= 1.01;
-                    }
+                    data.housePrice += 0.01;
+                    data.housePrice *= 1.01;
 
                 }
                 else
                 {
-                    if (rm.Next(99) < data.govementPosition.Last())
-                    {
-                        //政府偏向资本时，且来百姓没钱时，政府更偏向于降低房价
-
-                        data.housePrice *= 0.9;
-                    }
-                    else
-                    {
-                        //政府偏向人民使，且百姓有钱时，政府更偏向于降低教育支出
-                        //所以教育资本会增加
-                        data.educateBasePrice *= 0.9;
-                    }
+                    data.housePrice *= 0.9;
                 }
 
 
