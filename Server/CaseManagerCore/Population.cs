@@ -99,9 +99,11 @@ namespace CaseManagerCore
 
                 public Dictionary<int, List<double>> educationCost { get; set; }
 
-                public Dictionary<int, List<double>> educationScore { get; set; }
+                public Dictionary<int, List<int>> educationScore { get; set; }
 
                 public bool gameOver = false;
+
+
             }
 
             public State state { get; set; }
@@ -219,7 +221,7 @@ namespace CaseManagerCore
                 this.state.fourthBabyAge = null;
 
                 this.state.educationCost = new Dictionary<int, List<double>>();
-                this.state.educationScore = new Dictionary<int, List<double>>();
+                this.state.educationScore = new Dictionary<int, List<int>>();
             }
 
             public override string ToString()
@@ -243,20 +245,21 @@ namespace CaseManagerCore
                 passObj.state.age++;
                 passObj.state.year++;
 
+                DealWithWork(ref rm, data, c, ref passObj);
+
                 if (passObj.state.fourthBabyAge != null)
                 {
                     passObj.state.fourthBabyAge++;
-                    if (passObj.state.fourthBabyAge > 3)
+                    if (passObj.state.fourthBabyAge > 3 && passObj.state.fourthBabyAge < passObj.state.age)
                     {
-                        setChildEducate(passObj.state.fourthBabyAge.Value, 4, ref passObj, data);
+                        setChildEducate(passObj.state.fourthBabyAge.Value, 4, ref passObj, ref rm, data);
                     }
-
                 }
 
                 if (passObj.state.thirdBabyAge != null)
                 {
                     passObj.state.thirdBabyAge++;
-                    if (passObj.state.thirdBabyAge > 3)
+                    if (passObj.state.thirdBabyAge > 3 && passObj.state.fourthBabyAge < passObj.state.age)
                     {
                         setChildEducate(passObj.state.thirdBabyAge.Value, 3, ref passObj, data);
                     }
@@ -266,7 +269,7 @@ namespace CaseManagerCore
                 {
                     passObj.state.secondBabyAge++;
 
-                    if (passObj.state.secondBabyAge > 3)
+                    if (passObj.state.secondBabyAge > 3 && passObj.state.fourthBabyAge < passObj.state.age)
                     {
                         setChildEducate(passObj.state.secondBabyAge.Value, 2, ref passObj, data);
                     }
@@ -285,21 +288,13 @@ namespace CaseManagerCore
                         }
 
                     }
-                    if (passObj.state.firstBabyAge > 3)
+                    if (passObj.state.firstBabyAge > 3 && passObj.state.fourthBabyAge < passObj.state.age)
                     {
                         setChildEducate(passObj.state.firstBabyAge.Value, 1, ref passObj, data);
                     }
-                    // setChildEducate(passObj.state.firstBabyAge, 1, ref passObj, data);
-                    //if (passObj.state.firstBabyAge > 3) 
-                    //{
-                    //    if (passObj.actions.Contains("Employee-Love"))
-                    //}
                 }
                 //工作
-                DealWithWork(ref rm, data, c, ref passObj);
-                {
 
-                }
                 if (passObj.actions.Contains("Employee-Love"))
                 {
                     return Love(ref rm, data, c, ref passObj);
@@ -310,19 +305,19 @@ namespace CaseManagerCore
                 }
                 else if (passObj.actions.Contains("Employee-BirthFirstBaby"))
                 {
-                    return BirthFirstBaby(ref rm, data, c, ref passObj);
+                    return BirthhBaby(1, ref rm, data, c, ref passObj);
                 }
                 else if (passObj.actions.Contains("Employee-BirthSecondBaby"))
                 {
-                    return BirthSecondBaby(ref rm, data, c, ref passObj);
+                    return BirthhBaby(2, ref rm, data, c, ref passObj);
                 }
                 else if (passObj.actions.Contains("Employee-BirthThirdBaby"))
                 {
-                    return BirthThirdBaby(ref rm, data, c, ref passObj);
+                    return BirthhBaby(3, ref rm, data, c, ref passObj);
                 }
                 else if (passObj.actions.Contains("Employee-BirthFourthBaby"))
                 {
-                    return BirthFourthBaby(ref rm, data, c, ref passObj);
+                    return BirthhBaby(4, ref rm, data, c, ref passObj);
                 }
                 else
                 {
@@ -330,7 +325,7 @@ namespace CaseManagerCore
                 }
             }
 
-            private static void setChildEducate(int babyAgeValue, int babyIndex, ref PassObjToServer passObj, Data data)
+            private static void setChildEducate(int babyAgeValue, int babyIndex, ref PassObjToServer passObj, ref Random rm, Data data)
             {
                 var selfPay = Math.Round(1.0 / 50 * data.govementPosition.Last(), 2);
                 var govementPay = Math.Round(1 - selfPay, 2);
@@ -366,23 +361,9 @@ namespace CaseManagerCore
                         price = Math.Round(price, 2);
                         if (passObj.state.sumSave - (price * selfPay) >= 0)
                         {
-                            passObj.state.sumSave -= (price * selfPay);
-                            passObj.state.educationCost[babyIndex].Add(price);
-
-                            string msg;
-                            if (govementPay >= 0)
-                            {
-                                msg = $"您的第{getBabyIndex(babyIndex)}个孩子接受到了优质教育，总共需要{price.ToString("f2")}金币，个人花费{(price * selfPay).ToString("f2")}金币，政府补贴{(price * govementPay).ToString("f2")}金币。";
-                            }
-                            else if (govementPay == 0)
-                            {
-                                msg = $"您的第{getBabyIndex(babyIndex)}个孩子接受到了优质教育，总共需要{price.ToString("f2")}金币，个人花费{(price * selfPay).ToString("f2")}金币。";
-                            }
-                            else
-                            {
-                                msg = $"您的第{getBabyIndex(babyIndex)}个孩子接受到了优质教育，总共需要{price.ToString("f2")}金币，个人花费{(price * selfPay).ToString("f2")}金币，其中{(price * (-govementPay)).ToString("f2")}金币作为教育附加税上缴给了政府！";
-                            }
-                            passObj.notifyMsgs.Add(msg);
+                            educationPay(price, babyIndex, selfPay, ref passObj);
+                            addNotifyMsgOfEdution(govementPay, selfPay, babyIndex, price, "贵族教育", ref passObj);
+                            setEducateResult(0, babyIndex, ref rm, ref passObj);
 
                             return;
                         }
@@ -392,7 +373,7 @@ namespace CaseManagerCore
                         }
                     }
 
-                    while (passObj.actions.Contains("Employee-Educate-Good") || passObj.actions.Contains("Employee-Educate-Perfect"))
+                    if (passObj.actions.Contains("Employee-Educate-Good") || passObj.actions.Contains("Employee-Educate-Perfect"))
                     {
                         List<double> prices = new List<double>();
                         for (var i = 0; i < data.educationCost.Count; i++)
@@ -420,43 +401,26 @@ namespace CaseManagerCore
 
                         if (passObj.state.sumSave - (price * selfPay) >= 0)
                         {
-                            passObj.state.sumSave -= (price * selfPay);
+                            educationPay(price, babyIndex, selfPay, ref passObj);
+
                             if (passObj.actions.Contains("Employee-Educate-Perfect"))
                             {
-                                passObj.notifyMsgs.Add($"由于您的钱不够支持您的第{getBabyIndex(babyIndex)}个孩子的优质教育费用，他只能接受到了优质教育，个人花费${(price * selfPay).ToString("f2")}金币");
-                                if (govementPay > 0)
-                                {
-                                    passObj.notifyMsgs.Add($"由于您的钱不够支持您的第{babyIndex}个孩子的顶级教育费用，他只能接受到了优质教育，政府资助${(price * govementPay).ToString("f2")}金币");
-                                }
-                                else if (govementPay < 0)
-                                {
-                                    passObj.notifyMsgs.Add($"由于您的钱不够支持您的第{babyIndex}个孩子的顶级教育费用，他只能接受到了优质教育，您资助政府${(price * -govementPay).ToString("f2")}金币");
-                                }
+                                addNotifyMsgOfEduReplaceBy(govementPay, selfPay, babyIndex, price, "贵族教育", "优质教育", ref passObj);
                             }
                             else
                             {
-                                passObj.notifyMsgs.Add($"由于您的第{babyIndex}个孩子接受到了优质教育，个人花费${(price * selfPay).ToString("f2")}金币");
-                                if (govementPay > 0)
-                                {
-                                    passObj.notifyMsgs.Add($"您的第{babyIndex}个孩子接受到了优质教育，政府资助${(price * govementPay).ToString("f2")}金币");
-                                }
-                                else if (govementPay < 0)
-                                {
-                                    passObj.notifyMsgs.Add($"您的第{babyIndex}个孩子接受到了优质教育，您资助政府${(price * -govementPay).ToString("f2")}金币");
-                                }
+                                addNotifyMsgOfEdution(govementPay, selfPay, babyIndex, price, "优质教育", ref passObj);
                             }
-                            passObj.state.educationCost[babyIndex].Add(price);
-                            // Console.WriteLine($"您的第{babyIndex}个孩子接受到了良好教育，花费${price.ToString("f2")}金币");
+                            setEducateResult(1, babyIndex, ref rm, ref passObj);
                             return;
                         }
                         else
                         {
 
                         }
-                        break;
                     }
 
-                    while (true)
+
                     {
                         List<double> prices = new List<double>();
                         for (var i = 0; i < data.educationCost.Count; i++)
@@ -475,28 +439,113 @@ namespace CaseManagerCore
                         }
                         else
                         {
-                            //98% ~10%
-                            //var p = -0.88 / 100 * data.govementPosition.Last() + 0.98;
-                            //var indexV = Convert.ToInt32(Math.Floor(p * newPrice.Count));
                             price = data.govementPosition.Last() + 0.01;
                         }
+                        educationPay(price, babyIndex, selfPay, ref passObj);
 
-                        passObj.state.sumSave -= price;
                         if (passObj.actions.Contains("Employee-Educate-Perfect"))
                         {
-                            passObj.notifyMsgs.Add($"由于您的钱不够支持您的第{babyIndex}个孩子的顶级教育费用，他只能接受到了普通教育，花费${price.ToString("f2")}金币");
+                            addNotifyMsgOfEduReplaceBy(govementPay, selfPay, babyIndex, price, "贵族教育", "普通教育", ref passObj);
+
                         }
                         else if (passObj.actions.Contains("Employee-Educate-Good"))
                         {
-                            passObj.notifyMsgs.Add($"由于您的钱不够支持您的第{babyIndex}个孩子的优质教育费用，他只能接受到了普通教育，花费${price.ToString("f2")}金币");
+                            addNotifyMsgOfEduReplaceBy(govementPay, selfPay, babyIndex, price, "优质教育", "普通教育", ref passObj);
                         }
-                        passObj.state.educationCost[babyIndex].Add(price);
-                        Console.WriteLine($"您的第{babyIndex}个孩子接受到了普通教育，花费${price.ToString("f2")}金币");
+                        else
+                        {
+                            addNotifyMsgOfEdution(govementPay, selfPay, babyIndex, price, "普通教育", ref passObj);
+                        }
+                        setEducateResult(2, babyIndex, ref rm, ref passObj);
                         return;
-
-                        break;
                     }
                 }
+            }
+
+            private static void setEducateResult(int selectCondition, int childIndex, ref Random rm, ref PassObjToServer passObj)
+            {
+                if (selectCondition == 0)
+                {
+                    //贵族教育
+                    var score = 99;
+                    for (int i = 0; i < 2; i++)
+                    {
+                        var s = rm.Next(90, 100);
+                        score = Math.Min(score, s);
+                    }
+                    passObj.state.educationScore[childIndex].Add(score);
+                    passObj.notifyMsgs.Add($"你的第{getBabyIndex(childIndex)}个孩子获取了{score}分。");
+                }
+                else if (selectCondition == 1)
+                {
+                    //贵族教育
+                    var score = 99;
+                    for (int i = 0; i < 2; i++)
+                    {
+                        var s = rm.Next(70, 100);
+                        score = Math.Min(score, s);
+                    }
+                    passObj.state.educationScore[childIndex].Add(score);
+                    passObj.notifyMsgs.Add($"你的第{getBabyIndex(childIndex)}个孩子获取了{score}分。");
+                }
+                else if (selectCondition == 2)
+                {
+                    //贵族教育
+                    var score = 99;
+                    for (int i = 0; i < 2; i++)
+                    {
+                        var s = rm.Next(50, 100);
+                        score = Math.Min(score, s);
+                    }
+                    passObj.state.educationScore[childIndex].Add(score);
+                    passObj.notifyMsgs.Add($"你的第{getBabyIndex(childIndex)}个孩子获取了{score}分。");
+                }
+
+            }
+
+            private static void educationPay(double price, int babyIndex, double selfPay, ref PassObjToServer passObj)
+            {
+                price = Math.Round(price, 2);
+                passObj.state.educationCost[babyIndex].Add(price);
+                passObj.state.sumSave -= (price * selfPay);
+                passObj.state.sumSave = Math.Round(passObj.state.sumSave);
+            }
+
+            private static void addNotifyMsgOfEdution(double govementPay, double selfPay, int babyIndex, double price, string edu, ref PassObjToServer passObj)
+            {
+                string msg;
+                if (govementPay > 0)
+                {
+                    msg = $"您的第{getBabyIndex(babyIndex)}个孩子接受到了{edu}，总共需要{price.ToString("f2")}金币，个人花费{(price * selfPay).ToString("f2")}金币，政府补贴{(price * govementPay).ToString("f2")}金币。";
+                }
+                else if (govementPay == 0)
+                {
+                    msg = $"您的第{getBabyIndex(babyIndex)}个孩子接受到了{edu}，总共需要{price.ToString("f2")}金币，个人花费{(price * selfPay).ToString("f2")}金币。";
+                }
+                else
+                {
+                    msg = $"您的第{getBabyIndex(babyIndex)}个孩子接受到了{edu}，总共需要{price.ToString("f2")}金币，个人花费{(price * selfPay).ToString("f2")}金币，其中{(price * (-govementPay)).ToString("f2")}金币作为教育附加税上缴给了政府！";
+                }
+                passObj.notifyMsgs.Add(msg);
+            }
+
+            private static void addNotifyMsgOfEduReplaceBy(double govementPay, double selfPay, int babyIndex, double price, string replaceItem, string replaceBy, ref PassObjToServer passObj)
+            {
+                //  addNotifyMsgOfReplaceBy(govementPay, selfPay,babyIndex, price,"贵族教育", "普通教育",ref passObj);
+                string msg;
+                if (govementPay > 0)
+                {
+                    msg = $"您的第{getBabyIndex(babyIndex)}个孩子未能接受{replaceItem}，但接受到了{replaceBy}，总共需要{price.ToString("f2")}金币，个人花费{(price * selfPay).ToString("f2")}金币，政府补贴{(price * govementPay).ToString("f2")}金币。";
+                }
+                else if (govementPay == 0)
+                {
+                    msg = $"您的第{getBabyIndex(babyIndex)}个孩子未能接受{replaceItem}，但接受到了{replaceBy}，总共需要{price.ToString("f2")}金币，个人花费{(price * selfPay).ToString("f2")}金币。";
+                }
+                else
+                {
+                    msg = $"您的第{getBabyIndex(babyIndex)}个孩子未能接受{replaceItem}，但接受到了{replaceBy}，总共需要{price.ToString("f2")}金币，个人花费{(price * selfPay).ToString("f2")}金币，其中{(price * (-govementPay)).ToString("f2")}金币作为教育附加税上缴给了政府！";
+                }
+                passObj.notifyMsgs.Add(msg);
             }
 
             private static string getBabyIndex(int babyIndex)
@@ -512,18 +561,38 @@ namespace CaseManagerCore
                 // throw new NotImplementedException();
             }
 
-            private static string BirthFourthBaby(ref Random rm, Data data, Server.Command c, ref PassObjToServer passObj)
-            {
-                throw new NotImplementedException();
-            }
 
-            private static string BirthThirdBaby(ref Random rm, Data data, Server.Command c, ref PassObjToServer passObj)
+            private static string BirthhBaby(int babyIndex, ref Random rm, Data data, Server.Command c, ref PassObjToServer passObj)
             {
                 var govementPosition = data.govementPosition.Last();
                 var successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.375 + 0.425;
 
-                var cost = data.housePrice * 0.4;
+                double cost;
+                switch (babyIndex)
+                {
+                    case 1:
+                        {
+                            cost = data.housePrice * 0.5;
+                        }; break;
+                    case 2:
+                        {
+                            cost = data.housePrice * 0.4;
+                        }; break;
+                    case 3:
+                        {
+                            cost = data.housePrice * 0.3;
+                        }; break;
+                    case 4:
+                        {
+                            cost = data.housePrice * 0.2;
+                        }; break;
+                    default:
+                        {
+                            cost = data.housePrice * 0.2;
+                        }; break;
+                }
                 cost = Math.Round(cost, 2);
+
                 var sumActionCount = data.employerActions.Sum(item => item.Count);
 
 
@@ -549,129 +618,44 @@ namespace CaseManagerCore
                         }
                     }
                 }
-                //double salary = Math.Cos(govementPosition / 100 * Math.PI) * 0.5 + 1;//
 
-                //passObj.notifyMsgs.Add($"打工收入，获得{salary.ToString("f2")}金币；");
-                //passObj.state.sumSave += salary;
                 if (rm.NextDouble() < successLimet)
                 {
-                    passObj.notifyMsgs.Add($"你生第三个孩子的时候，花费了{cost.ToString("f2")}。");
+                    passObj.notifyMsgs.Add($"你生第{getBabyIndex(babyIndex)}个孩子的时候，花费了{cost.ToString("f2")}金币。");
+                    if (babyIndex == 1) passObj.notifyMsgs.Add("您获得了新技能：陪孩子玩耍--亲子。");
                     passObj.state.sumSave -= cost;
                     passObj.state.sumSave = Math.Round(passObj.state.sumSave, 2);
-                    passObj.state.secondBabyAge = 0;
-                    passObj.state.canGetSecondBaby = false;
-                    passObj.state.canGetThirdBaby = true;
-                    passObj.state.canEducate = true;
+
+                    switch (babyIndex)
+                    {
+                        case 1:
+                            {
+                                passObj.state.firstBabyAge = 0;
+                                passObj.state.canGetSecondBaby = true;
+                                passObj.state.canGetFirstBaby = false;
+                            }; break;
+                        case 2:
+                            {
+                                passObj.state.secondBabyAge = 0;
+                                passObj.state.canGetThirdBaby = true;
+                                passObj.state.canGetSecondBaby = false;
+                            }; break;
+                        case 3:
+                            {
+                                passObj.state.thirdBabyAge = 0;
+                                passObj.state.canGetFourthBaby = true;
+                                passObj.state.canGetThirdBaby = false;
+                            }; break;
+                        case 4:
+                            {
+                                passObj.state.fourthBabyAge = 0;
+                                passObj.state.canGetFourthBaby = false;
+                            }; break;
+
+                    }
+
                     passObj.state.educationCost.Add(1, new List<double>());
-                    return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
-                }
-                else
-                {
-                    passObj.notifyMsgs.Add($"受孕不成功！！");
-                    return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
-                }
-            }
-
-            private static string BirthSecondBaby(ref Random rm, Data data, Server.Command c, ref PassObjToServer passObj)
-            {
-                var govementPosition = data.govementPosition.Last();
-                var successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.375 + 0.425;
-
-                var cost = data.housePrice * 0.4;
-                cost = Math.Round(cost, 2);
-                var sumActionCount = data.employerActions.Sum(item => item.Count);
-
-
-
-
-                short employerAction = -1;
-
-                //遇到的雇主，会对生孩几率的影响。
-                if (sumActionCount > 0)
-                {
-                    var randPosition = rm.Next(sumActionCount);
-                    for (int i = 0; i < data.employerActions.Count; i++)
-                    {
-                        if (randPosition >= data.employerActions[i].Count)
-                        {
-                            randPosition -= data.employerActions[i].Count;
-                            continue;
-                        }
-                        else
-                        {
-                            employerAction = data.employerActions[i][randPosition];
-                            break;
-                        }
-                    }
-                }
-                //double salary = Math.Cos(govementPosition / 100 * Math.PI) * 0.5 + 1;//
-
-                //passObj.notifyMsgs.Add($"打工收入，获得{salary.ToString("f2")}金币；");
-                //passObj.state.sumSave += salary;
-                if (rm.NextDouble() < successLimet)
-                {
-                    passObj.notifyMsgs.Add($"你生第二个孩子的时候，花费了{cost.ToString("f2")}。");
-                    passObj.state.sumSave -= cost;
-                    passObj.state.sumSave = Math.Round(passObj.state.sumSave, 2);
-                    passObj.state.secondBabyAge = 0;
-                    passObj.state.canGetSecondBaby = false;
-                    passObj.state.canGetThirdBaby = true;
-                    passObj.state.educationCost.Add(2, new List<double>());
-                    return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
-                }
-                else
-                {
-                    passObj.notifyMsgs.Add($"受孕不成功！！");
-                    return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
-                }
-            }
-
-            private static string BirthFirstBaby(ref Random rm, Data data, Server.Command c, ref PassObjToServer passObj)
-            {
-                var govementPosition = data.govementPosition.Last();
-                var successLimet = Math.Cos(govementPosition / 100 * Math.PI) * 0.375 + 0.425;
-
-                var cost = data.housePrice * 0.5;
-                cost = Math.Round(cost, 2);
-                var sumActionCount = data.employerActions.Sum(item => item.Count);
-
-
-
-
-                short employerAction = -1;
-
-                //遇到的雇主，会对生孩几率的影响。
-                if (sumActionCount > 0)
-                {
-                    var randPosition = rm.Next(sumActionCount);
-                    for (int i = 0; i < data.employerActions.Count; i++)
-                    {
-                        if (randPosition >= data.employerActions[i].Count)
-                        {
-                            randPosition -= data.employerActions[i].Count;
-                            continue;
-                        }
-                        else
-                        {
-                            employerAction = data.employerActions[i][randPosition];
-                            break;
-                        }
-                    }
-                }
-                //double salary = Math.Cos(govementPosition / 100 * Math.PI) * 0.5 + 1;//
-
-                //passObj.notifyMsgs.Add($"打工收入，获得{salary.ToString("f2")}金币；");
-                //passObj.state.sumSave += salary;
-                if (rm.NextDouble() < successLimet)
-                {
-                    passObj.notifyMsgs.Add($"你生第一个孩子的时候，花费了{cost.ToString("f2")}。");
-                    passObj.notifyMsgs.Add("您获得了新技能：陪孩子玩耍。");
-                    passObj.state.sumSave -= cost;
-                    passObj.state.sumSave = Math.Round(passObj.state.sumSave, 2);
-                    passObj.state.firstBabyAge = 0;
-                    passObj.state.canGetSecondBaby = true;
-                    passObj.state.canGetFirstBaby = false;
-                    passObj.state.educationCost.Add(1, new List<double>());
+                    passObj.state.educationScore.Add(babyIndex, new List<int>());
                     return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
                 }
                 else
@@ -680,6 +664,7 @@ namespace CaseManagerCore
                     return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
                 }
             }
+
 
             private static void DealWithWork(ref Random rm, Data data, Server.Command c, ref PassObjToServer passObj)
             {
@@ -1002,6 +987,8 @@ namespace CaseManagerCore
             /// 教育基本价格
             /// </summary>
             //public double educateBasePrice { get; set; }
+
+
 
         }
 
