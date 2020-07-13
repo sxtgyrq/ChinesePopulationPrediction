@@ -1,0 +1,3 @@
+{
+  "connectStr": "Server=XX.mysql.rds.aliyuncs.com;Database=XX;User=XX; Password=XX;Charset=utf8;Connection Timeout=60;"
+}

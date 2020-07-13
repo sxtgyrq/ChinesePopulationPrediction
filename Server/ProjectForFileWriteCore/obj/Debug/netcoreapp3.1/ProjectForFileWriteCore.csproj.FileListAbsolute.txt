@@ -1,0 +1,16 @@
+F:\MyProject\MapFightWithAllCity\FightWebApp\ProjectForFileWriteCore\bin\Debug\netcoreapp3.1\ProjectForFileWriteCore.deps.json
+F:\MyProject\MapFightWithAllCity\FightWebApp\ProjectForFileWriteCore\bin\Debug\netcoreapp3.1\ProjectForFileWriteCore.dll
+F:\MyProject\MapFightWithAllCity\FightWebApp\ProjectForFileWriteCore\bin\Debug\netcoreapp3.1\ProjectForFileWriteCore.pdb
+F:\MyProject\MapFightWithAllCity\FightWebApp\ProjectForFileWriteCore\obj\Debug\netcoreapp3.1\ProjectForFileWriteCore.csproj.CoreCompileInputs.cache
+F:\MyProject\MapFightWithAllCity\FightWebApp\ProjectForFileWriteCore\obj\Debug\netcoreapp3.1\ProjectForFileWriteCore.AssemblyInfoInputs.cache
+F:\MyProject\MapFightWithAllCity\FightWebApp\ProjectForFileWriteCore\obj\Debug\netcoreapp3.1\ProjectForFileWriteCore.AssemblyInfo.cs
+F:\MyProject\MapFightWithAllCity\FightWebApp\ProjectForFileWriteCore\obj\Debug\netcoreapp3.1\ProjectForFileWriteCore.dll
+F:\MyProject\MapFightWithAllCity\FightWebApp\ProjectForFileWriteCore\obj\Debug\netcoreapp3.1\ProjectForFileWriteCore.pdb
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\ProjectForFileWriteCore\bin\Debug\netcoreapp3.1\ProjectForFileWriteCore.deps.json
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\ProjectForFileWriteCore\bin\Debug\netcoreapp3.1\ProjectForFileWriteCore.dll
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\ProjectForFileWriteCore\bin\Debug\netcoreapp3.1\ProjectForFileWriteCore.pdb
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\ProjectForFileWriteCore\obj\Debug\netcoreapp3.1\ProjectForFileWriteCore.csproj.CoreCompileInputs.cache
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\ProjectForFileWriteCore\obj\Debug\netcoreapp3.1\ProjectForFileWriteCore.AssemblyInfoInputs.cache
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\ProjectForFileWriteCore\obj\Debug\netcoreapp3.1\ProjectForFileWriteCore.AssemblyInfo.cs
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\ProjectForFileWriteCore\obj\Debug\netcoreapp3.1\ProjectForFileWriteCore.dll
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\ProjectForFileWriteCore\obj\Debug\netcoreapp3.1\ProjectForFileWriteCore.pdb

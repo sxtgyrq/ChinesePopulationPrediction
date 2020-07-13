@@ -1,0 +1,339 @@
+{
+  "format": 1,
+  "restore": {
+    "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\CoreWsApp2\\CoreWsApp2.csproj": {}
+  },
+  "projects": {
+    "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\CaseManagerCore\\CaseManagerCore.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\CaseManagerCore\\CaseManagerCore.csproj",
+        "projectName": "CaseManagerCore",
+        "projectPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\CaseManagerCore\\CaseManagerCore.csproj",
+        "packagesPath": "C:\\Users\\sxtgy\\.nuget\\packages\\",
+        "outputPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\CaseManagerCore\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\sxtgy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\MysqlCore\\MysqlCore.csproj": {
+                "projectPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\MysqlCore\\MysqlCore.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\CoreWsApp2\\CoreWsApp2.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\CoreWsApp2\\CoreWsApp2.csproj",
+        "projectName": "CoreWsApp2",
+        "projectPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\CoreWsApp2\\CoreWsApp2.csproj",
+        "packagesPath": "C:\\Users\\sxtgy\\.nuget\\packages\\",
+        "outputPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\CoreWsApp2\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\sxtgy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\CaseManagerCore\\CaseManagerCore.csproj": {
+                "projectPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\CaseManagerCore\\CaseManagerCore.csproj"
+              },
+              "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\EccCore\\EccCore.csproj": {
+                "projectPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\EccCore\\EccCore.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\EccCore\\EccCore.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\EccCore\\EccCore.csproj",
+        "projectName": "EccCore",
+        "projectPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\EccCore\\EccCore.csproj",
+        "packagesPath": "C:\\Users\\sxtgy\\.nuget\\packages\\",
+        "outputPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\EccCore\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\sxtgy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "RIPEMD": {
+              "target": "Package",
+              "version": "[4.3.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\MysqlCore\\MysqlCore.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\MysqlCore\\MysqlCore.csproj",
+        "projectName": "MysqlCore",
+        "projectPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\MysqlCore\\MysqlCore.csproj",
+        "packagesPath": "C:\\Users\\sxtgy\\.nuget\\packages\\",
+        "outputPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\MysqlCore\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\sxtgy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\ProjectForFileWriteCore\\ProjectForFileWriteCore.csproj": {
+                "projectPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\ProjectForFileWriteCore\\ProjectForFileWriteCore.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            },
+            "Microsoft.Extensions.Configuration.Json": {
+              "target": "Package",
+              "version": "[3.1.4, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.20, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\ProjectForFileWriteCore\\ProjectForFileWriteCore.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\ProjectForFileWriteCore\\ProjectForFileWriteCore.csproj",
+        "projectName": "ProjectForFileWriteCore",
+        "projectPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\ProjectForFileWriteCore\\ProjectForFileWriteCore.csproj",
+        "packagesPath": "C:\\Users\\sxtgy\\.nuget\\packages\\",
+        "outputPath": "F:\\MyProject\\Cpp\\ChinesePopulationPrediction\\Server\\ProjectForFileWriteCore\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\sxtgy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.201\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

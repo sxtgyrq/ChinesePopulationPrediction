@@ -4,7 +4,7 @@
     this.dealWithDataFunction = null;
     this.connectWebsocket = function () {
 
-        this.socket = new WebSocket("wss://" + window.location.host + '/app2/');
+        this.socket = new WebSocket("ws://" + window.location.host + '/app2/');
         if (this.functionAfterSocketConnected != null) {
             this.socket.addEventListener("open", this.functionAfterSocketConnected, false);
         }

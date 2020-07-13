@@ -1,0 +1,9 @@
+F:\MyProject\MapFightWithAllCity\FightWebApp\EccCore\bin\Release\netcoreapp3.1\EccCore.deps.json
+F:\MyProject\MapFightWithAllCity\FightWebApp\EccCore\bin\Release\netcoreapp3.1\EccCore.dll
+F:\MyProject\MapFightWithAllCity\FightWebApp\EccCore\bin\Release\netcoreapp3.1\EccCore.pdb
+F:\MyProject\MapFightWithAllCity\FightWebApp\EccCore\obj\Release\netcoreapp3.1\EccCore.csprojAssemblyReference.cache
+F:\MyProject\MapFightWithAllCity\FightWebApp\EccCore\obj\Release\netcoreapp3.1\EccCore.csproj.CoreCompileInputs.cache
+F:\MyProject\MapFightWithAllCity\FightWebApp\EccCore\obj\Release\netcoreapp3.1\EccCore.AssemblyInfoInputs.cache
+F:\MyProject\MapFightWithAllCity\FightWebApp\EccCore\obj\Release\netcoreapp3.1\EccCore.AssemblyInfo.cs
+F:\MyProject\MapFightWithAllCity\FightWebApp\EccCore\obj\Release\netcoreapp3.1\EccCore.dll
+F:\MyProject\MapFightWithAllCity\FightWebApp\EccCore\obj\Release\netcoreapp3.1\EccCore.pdb

@@ -197,7 +197,7 @@ var musicManger = {
 var setNotify = function (msg) {
     document.getElementById('notifyMsg').innerText = msg;
 }
-$(document).ready(function () { 
+$(document).ready(function () {
     pMain = new Program();
 
     pMain.dealWithDataFunction = function (evt) {
@@ -206,17 +206,18 @@ $(document).ready(function () {
 
     pMain.functionAfterSocketConnected = function () {
 
-        $.get('https://www.nyrq123.com/api/gettoken/', { dt: Date.now(), action: 'Population' }, function (data) {
-            var obj = JSON.parse(data);
-            pMain.socket.send(obj.actonTime + '_' + obj.actionCommand + '_' + obj.sign);
-            // draw();
+        //$.get('https://www.nyrq123.com/api/gettoken/', { dt: Date.now(), action: 'Population' }, function (data) {
+        //    var obj = JSON.parse(data);
+        //    pMain.socket.send(obj.actonTime + '_' + obj.actionCommand + '_' + obj.sign);
+        //    // draw();
 
-            //musicManger.musicBackground = document.getElementById("musicBackground");
-            //if (musicManger.musicBackground != null) {
-            //    musicManger.musicBackground.load();
-            //    musicManger.showWord();
-            //};
-        });
+        //    //musicManger.musicBackground = document.getElementById("musicBackground");
+        //    //if (musicManger.musicBackground != null) {
+        //    //    musicManger.musicBackground.load();
+        //    //    musicManger.showWord();
+        //    //};
+        //});
+        pMain.socket.send('20200712000000' + '_' + 'Population' + '_' + 'sign');
     }
     pMain.connectWebsocket();
 
@@ -267,6 +268,69 @@ var dealWithData = function (strData) {
                     var divCreateNew = document.createElement('div');
                     divCreateNew.innerHTML = objPass.childrenInfo[i];
                     divCreateNew.id = objGet.ObjID + '_c' + i;
+                    divCreateNew.classList.add('msg');
+                    var askAndAnswer = document.getElementById('askAndAnswer');
+
+                    askAndAnswer.appendChild(divCreateNew);
+                    askAndAnswer.scrollTop = askAndAnswer.scrollHeight;
+                }
+                employeeState = objPass.state;
+                employeeActions = objPass.actions;
+                employeeEducateAction = objPass.educateAction;
+            }; break;
+        case 'employee-notify-next':
+            {
+                showBtn(objGet.showContinue, objGet.showIsError, false);
+                var objPass = JSON.parse(objGet.msg);
+                {
+                    var divCreateNew = document.createElement('div');
+                    divCreateNew.innerHTML = objPass.ageDisplay;
+                    divCreateNew.id = objGet.ObjID + '_a';
+
+                    // MathJax.Hub.Queue(["Typeset", MathJax.Hub, divCreateNew]);
+                    var askAndAnswer = document.getElementById('askAndAnswer');
+                    divCreateNew.classList.add('msg');
+                    askAndAnswer.appendChild(divCreateNew);
+                    askAndAnswer.scrollTop = askAndAnswer.scrollHeight;
+                }
+                {
+                    var divCreateNew = document.createElement('div');
+                    divCreateNew.innerHTML = objPass.yearDisplay;
+                    divCreateNew.id = objGet.ObjID + '_b';
+                    divCreateNew.classList.add('msg');
+                    // MathJax.Hub.Queue(["Typeset", MathJax.Hub, divCreateNew]);
+                    var askAndAnswer = document.getElementById('askAndAnswer');
+
+                    askAndAnswer.appendChild(divCreateNew);
+                    askAndAnswer.scrollTop = askAndAnswer.scrollHeight;
+                }
+                for (var i = 0; i < objPass.childrenInfo.length; i++) {
+
+                    var divCreateNew = document.createElement('div');
+                    divCreateNew.innerHTML = objPass.childrenInfo[i];
+                    divCreateNew.id = objGet.ObjID + '_c' + i;
+                    divCreateNew.classList.add('msg');
+                    var askAndAnswer = document.getElementById('askAndAnswer');
+
+                    askAndAnswer.appendChild(divCreateNew);
+                    askAndAnswer.scrollTop = askAndAnswer.scrollHeight;
+                }
+                for (var i = 0; i < objPass.childrenInfo.length; i++) {
+
+                    var divCreateNew = document.createElement('div');
+                    divCreateNew.innerHTML = objPass.childrenInfo[i];
+                    divCreateNew.id = objGet.ObjID + '_c' + i;
+                    divCreateNew.classList.add('msg');
+                    var askAndAnswer = document.getElementById('askAndAnswer');
+
+                    askAndAnswer.appendChild(divCreateNew);
+                    askAndAnswer.scrollTop = askAndAnswer.scrollHeight;
+                }
+                for (var i = 0; i < objPass.notifyMsgs.length; i++)
+                {
+                    var divCreateNew = document.createElement('div');
+                    divCreateNew.innerHTML = objPass.notifyMsgs[i];
+                    divCreateNew.id = objGet.ObjID + '_n_' + i;
                     divCreateNew.classList.add('msg');
                     var askAndAnswer = document.getElementById('askAndAnswer');
 
@@ -593,11 +657,11 @@ var selectStrategy = function () {
         </div>`;
     }
     if (employeeState.canLove) innerHtml += divDesign('loveBtn', 'A', 'myButton', '恋爱', employeeActions.indexOf('Employee-Love') >= 0);
-    if (employeeState.canBeMarried) innerHtml += divDesign('marryBtn', 'B', 'myButton', '结婚', false);
-    if (employeeState.canGetFirstBaby) innerHtml += divDesign('boreFirstBabyBtn', 'C', 'myButton', '生一胎', false);
-    if (employeeState.canGetSecondBaby) innerHtml += divDesign('boreSecondBabyBtn', 'D', 'myButton', '生二胎', false);
-    if (employeeState.canGetThirdBaby) innerHtml += divDesign('boreThirdBabyBtn', 'E', 'myButton', '生三胎', false);
-    if (employeeState.canGetFourthBaby) innerHtml += divDesign('boreFourthBabyBtn', 'F', 'myButton', '生四胎', false);
+    if (employeeState.canBeMarried) innerHtml += divDesign('marryBtn', 'B', 'myButton', '结婚', employeeActions.indexOf('Employee-Marry') >= 0);
+    if (employeeState.canGetFirstBaby) innerHtml += divDesign('boreFirstBabyBtn', 'C', 'myButton', '生一胎', employeeActions.indexOf('Employee-BirthFirstBaby') >= 0);
+    if (employeeState.canGetSecondBaby) innerHtml += divDesign('boreSecondBabyBtn', 'D', 'myButton', '生二胎', employeeActions.indexOf('Employee-BirthSecondBaby') >= 0);
+    if (employeeState.canGetThirdBaby) innerHtml += divDesign('boreThirdBabyBtn', 'E', 'myButton', '生三胎', employeeActions.indexOf('Employee-BirthThirdBaby') >= 0);
+    if (employeeState.canGetFourthBaby) innerHtml += divDesign('boreFourthBabyBtn', 'F', 'myButton', '生四胎', employeeActions.indexOf('Employee-BirthFourthBaby') >= 0);
 
     if (employeeState.canEducate) innerHtml += educateDivDesign();
 
