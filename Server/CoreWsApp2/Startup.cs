@@ -103,8 +103,8 @@ namespace CoreWsApp2
 
             // Dictionary<string, string> state = new Dictionary<string, string>();
             //   Object obj = null;
-            CaseManager.BitCoinQuestionPage QuestionPageObjs = null; //Dictionary<string, CaseManager.BitCoinQuestionPage> QuestionPageObjs = new Dictionary<string, CaseManager.BitCoinQuestionPage>();
-            CaseManager.KekongHejubian KekongHejubians = null; // Dictionary<string, CaseManager.KekongHejubian> KekongHejubians = new Dictionary<string, CaseManager.KekongHejubian>();
+            //CaseManager.BitCoinQuestionPage QuestionPageObjs = null; //Dictionary<string, CaseManager.BitCoinQuestionPage> QuestionPageObjs = new Dictionary<string, CaseManager.BitCoinQuestionPage>();
+            //  CaseManager.KekongHejubian KekongHejubians = null; // Dictionary<string, CaseManager.KekongHejubian> KekongHejubians = new Dictionary<string, CaseManager.KekongHejubian>();
             CaseManager.Morsecode Morsecodes = null;// Dictionary<string, CaseManager.Morsecode> Morsecodes = new Dictionary<string, CaseManager.Morsecode>();
             CaseManager.Periodictable Periodictables = null;//  Dictionary<string, CaseManager.Periodictable> Periodictables = new Dictionary<string, CaseManager.Periodictable>();
             CaseManager.QianAndYang QianAndYangs = null; //Dictionary<string, CaseManager.QianAndYang> QianAndYangs = new Dictionary<string, CaseManager.QianAndYang>();
@@ -177,14 +177,14 @@ namespace CoreWsApp2
                                     {
                                         case "BitCoinQuestionPage":
                                             {
-                                                QuestionPageObjs = new CaseManager.BitCoinQuestionPage();
-                                                msg = QuestionPageObjs.GetMsg();
+                                                //QuestionPageObjs = new CaseManager.BitCoinQuestionPage();
+                                                //msg = QuestionPageObjs.GetMsg();
                                             }; break;
                                         case "KekongHejubian":
                                             {
-                                                var obj = new CaseManager.KekongHejubian();
-                                                KekongHejubians = obj;
-                                                msg = KekongHejubians.GetMsg();
+                                                //var obj = new CaseManager.KekongHejubian();
+                                                //KekongHejubians = obj;
+                                                //msg = KekongHejubians.GetMsg();
                                             }; break;
                                         case "BlockChain":
                                             {
@@ -327,20 +327,20 @@ namespace CoreWsApp2
                                     {
                                         case "BitCoinQuestionPage":
                                             {
-                                                if (QuestionPageObjs != null)
-                                                {
-                                                    QuestionPageObjs.Continue();
-                                                    msg = QuestionPageObjs.GetMsg();
-                                                }
+                                                //if (QuestionPageObjs != null)
+                                                //{
+                                                //    QuestionPageObjs.Continue();
+                                                //    msg = QuestionPageObjs.GetMsg();
+                                                //}
                                             }; break;
                                         case "KekongHejubian":
                                             {
-                                                if (KekongHejubians != null)
-                                                {
-                                                    KekongHejubians.Continue();
-                                                    msg = KekongHejubians.GetMsg();
+                                                //if (KekongHejubians != null)
+                                                //{
+                                                //    KekongHejubians.Continue();
+                                                //    msg = KekongHejubians.GetMsg();
 
-                                                }
+                                                //}
                                             }; break;
                                         case "Morsecode":
                                             {
@@ -410,21 +410,21 @@ namespace CoreWsApp2
                                     {
                                         case "BitCoinQuestionPage":
                                             {
-                                                if (QuestionPageObjs != null)
-                                                {
-                                                    QuestionPageObjs.errorRecovery();
-                                                    msg = QuestionPageObjs.GetMsg();
+                                                //if (QuestionPageObjs != null)
+                                                //{
+                                                //    QuestionPageObjs.errorRecovery();
+                                                //    msg = QuestionPageObjs.GetMsg();
 
-                                                }
+                                                //}
                                             }; break;
                                         case "KekongHejubian":
                                             {
-                                                if (KekongHejubians != null)
-                                                {
-                                                    KekongHejubians.errorRecovery();
-                                                    msg = KekongHejubians.GetMsg();
+                                                //if (KekongHejubians != null)
+                                                //{
+                                                //    KekongHejubians.errorRecovery();
+                                                //    msg = KekongHejubians.GetMsg();
 
-                                                }
+                                                //}
                                             }; break;
                                         case "Morsecode":
                                             {
@@ -498,19 +498,19 @@ namespace CoreWsApp2
                                     {
                                         case "BitCoinQuestionPage":
                                             {
-                                                if (QuestionPageObjs != null)
-                                                {
-                                                    msg = QuestionPageObjs.GetScore();
+                                                //if (QuestionPageObjs != null)
+                                                //{
+                                                //    msg = QuestionPageObjs.GetScore();
 
-                                                }
+                                                //}
                                             }; break;
                                         case "KekongHejubian":
                                             {
-                                                if (KekongHejubians != null)
-                                                {
-                                                    msg = KekongHejubians.GetScore();
+                                                //if (KekongHejubians != null)
+                                                //{
+                                                //    msg = KekongHejubians.GetScore();
 
-                                                }
+                                                //}
                                             }; break;
                                         case "Morsecode":
                                             {
@@ -735,19 +735,19 @@ namespace CoreWsApp2
                                         {
                                             case "BitCoinQuestionPage":
                                                 {
-                                                    if (QuestionPageObjs != null)
-                                                    {
-                                                        msg = QuestionPageObjs.SaveAddress(str.Trim());
+                                                    //if (QuestionPageObjs != null)
+                                                    //{
+                                                    //    msg = QuestionPageObjs.SaveAddress(str.Trim());
 
-                                                    }
+                                                    //}
                                                 }; break;
                                             case "KekongHejubian":
                                                 {
-                                                    if (KekongHejubians != null)
-                                                    {
-                                                        msg = KekongHejubians.SaveAddress(str.Trim());
+                                                    //if (KekongHejubians != null)
+                                                    //{
+                                                    //    msg = KekongHejubians.SaveAddress(str.Trim());
 
-                                                    }
+                                                    //}
                                                 }; break;
                                             case "Morsecode":
                                                 {

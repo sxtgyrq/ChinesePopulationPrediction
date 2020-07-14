@@ -14,3 +14,4 @@ F:\MyProject\Cpp\ChinesePopulationPrediction\Server\ProjectForFileWriteCore\obj\
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\ProjectForFileWriteCore\obj\Debug\netcoreapp3.1\ProjectForFileWriteCore.AssemblyInfo.cs
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\ProjectForFileWriteCore\obj\Debug\netcoreapp3.1\ProjectForFileWriteCore.dll
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\ProjectForFileWriteCore\obj\Debug\netcoreapp3.1\ProjectForFileWriteCore.pdb
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\ProjectForFileWriteCore\obj\Debug\netcoreapp3.1\ProjectForFileWriteCore.csprojAssemblyReference.cache

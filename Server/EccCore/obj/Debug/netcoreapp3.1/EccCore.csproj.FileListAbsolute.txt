@@ -10,9 +10,9 @@ F:\MyProject\MapFightWithAllCity\FightWebApp\EccCore\obj\Debug\netcoreapp3.1\Ecc
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\EccCore\bin\Debug\netcoreapp3.1\EccCore.deps.json
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\EccCore\bin\Debug\netcoreapp3.1\EccCore.dll
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\EccCore\bin\Debug\netcoreapp3.1\EccCore.pdb
-F:\MyProject\Cpp\ChinesePopulationPrediction\Server\EccCore\obj\Debug\netcoreapp3.1\EccCore.csprojAssemblyReference.cache
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\EccCore\obj\Debug\netcoreapp3.1\EccCore.csproj.CoreCompileInputs.cache
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\EccCore\obj\Debug\netcoreapp3.1\EccCore.AssemblyInfoInputs.cache
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\EccCore\obj\Debug\netcoreapp3.1\EccCore.AssemblyInfo.cs
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\EccCore\obj\Debug\netcoreapp3.1\EccCore.dll
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\EccCore\obj\Debug\netcoreapp3.1\EccCore.pdb
+F:\MyProject\Cpp\ChinesePopulationPrediction\Server\EccCore\obj\Debug\netcoreapp3.1\EccCore.csprojAssemblyReference.cache

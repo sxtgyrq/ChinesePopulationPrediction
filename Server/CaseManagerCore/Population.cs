@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Net.Sockets;
+using System.Runtime.CompilerServices;
 using System.Text;
 
 namespace CaseManagerCore
@@ -100,6 +101,7 @@ namespace CaseManagerCore
                 public Dictionary<int, List<double>> educationCost { get; set; }
 
                 public Dictionary<int, List<int>> educationScore { get; set; }
+                public Dictionary<int, List<int>> spiritScore { get; set; }
 
                 public bool gameOver = false;
 
@@ -222,6 +224,7 @@ namespace CaseManagerCore
 
                 this.state.educationCost = new Dictionary<int, List<double>>();
                 this.state.educationScore = new Dictionary<int, List<int>>();
+                this.state.spiritScore = new Dictionary<int, List<int>>();
             }
 
             public override string ToString()
@@ -254,14 +257,16 @@ namespace CaseManagerCore
                     {
                         setChildEducate(passObj.state.fourthBabyAge.Value, 4, ref passObj, ref rm, data);
                     }
+
+
                 }
 
                 if (passObj.state.thirdBabyAge != null)
                 {
                     passObj.state.thirdBabyAge++;
-                    if (passObj.state.thirdBabyAge > 3 && passObj.state.fourthBabyAge < passObj.state.age)
+                    if (passObj.state.thirdBabyAge > 3 && passObj.state.thirdBabyAge < passObj.state.age)
                     {
-                        setChildEducate(passObj.state.thirdBabyAge.Value, 3, ref passObj, data);
+                        setChildEducate(passObj.state.thirdBabyAge.Value, 3, ref passObj, ref rm, data);
                     }
                 }
 
@@ -269,9 +274,9 @@ namespace CaseManagerCore
                 {
                     passObj.state.secondBabyAge++;
 
-                    if (passObj.state.secondBabyAge > 3 && passObj.state.fourthBabyAge < passObj.state.age)
+                    if (passObj.state.secondBabyAge > 3 && passObj.state.secondBabyAge < passObj.state.age)
                     {
-                        setChildEducate(passObj.state.secondBabyAge.Value, 2, ref passObj, data);
+                        setChildEducate(passObj.state.secondBabyAge.Value, 2, ref passObj, ref rm, data);
                     }
                 }
 
@@ -288,11 +293,18 @@ namespace CaseManagerCore
                         }
 
                     }
-                    if (passObj.state.firstBabyAge > 3 && passObj.state.fourthBabyAge < passObj.state.age)
+                    if (passObj.state.firstBabyAge > 3 && passObj.state.firstBabyAge < passObj.state.age)
                     {
-                        setChildEducate(passObj.state.firstBabyAge.Value, 1, ref passObj, data);
+                        setChildEducate(passObj.state.firstBabyAge.Value, 1, ref passObj, ref rm, data);
                     }
+                    if (passObj.state.firstBabyAge <= 18)
+                    {
+
+                    }
+
                 }
+
+                setChildScript(passObj.state.firstBabyAge.Value, ref passObj, ref rm, data);
                 //工作
 
                 if (passObj.actions.Contains("Employee-Love"))
@@ -322,6 +334,158 @@ namespace CaseManagerCore
                 else
                 {
                     return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
+                }
+            }
+
+            private static void setChildScript(int value, ref PassObjToServer passObj, ref Random rm, Data data)
+            {
+                if (
+                    (passObj.state.firstBabyAge.HasValue && passObj.state.firstBabyAge < 18) &&
+                    (passObj.state.secondBabyAge.HasValue && passObj.state.secondBabyAge < 18) &&
+                    (passObj.state.thirdBabyAge.HasValue && passObj.state.thirdBabyAge < 18) &&
+                    (passObj.state.fourthBabyAge.HasValue && passObj.state.fourthBabyAge < 18)
+                    )
+                {
+                    var employerActions = new List<short>();
+                    for (var i = 0; i < data.employerActions.Count; i++)
+                    {
+                        for (var j = 0; j < data.employerActions[i].Count; j++)
+                        {
+                            employerActions.Add(data.employerActions[i][j]);
+                        }
+                    }
+                    if (employerActions.Count == 0)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        var employerActionNumber = employerActions[rm.Next(0, employerActions.Count)];
+                        var employerAction = getEmployerActionByNum(employerActionNumber);
+                        if (passObj.state.firstBabyAge.HasValue && passObj.state.firstBabyAge <= 18) 
+                        {
+                            
+                        }
+                    }
+                }
+                //var baseScript = rm.Next(90, 100);
+                //int addValue = 0;
+                ////for()
+
+
+
+                //else
+                //{
+
+                //    switch (employerAction)
+                //    {
+                //        case empoyerAction._996:
+                //            {
+                //                // addValue=-rm.Next()
+                //            }; break;
+                //    }
+                //}
+            }
+
+            public enum empoyerAction
+            {
+                _996,
+                onlyYounger,
+                discriminateWomen,
+                newTecnology_Success,
+                newTecnology_Failure,
+                goAway,
+                improveWelfare,
+                stopBusiness
+            }
+            private static void setChildScript(int babyAgeValue, int babyIndex, ref PassObjToServer passObj, ref Random rm, Data data)
+            {
+                // if()
+                var baseScript = rm.Next(90, 100);
+                int addValue = 0;
+                //for()
+                var employerActions = new List<short>();
+                for (var i = 0; i < data.employerActions.Count; i++)
+                {
+                    for (var j = 0; j < data.employerActions[i].Count; j++)
+                    {
+                        employerActions.Add(data.employerActions[i][j]);
+                    }
+                }
+                if (employerActions.Count == 0)
+                {
+
+                }
+                else
+                {
+                    var employerActionNumber = employerActions[rm.Next(0, employerActions.Count)];
+                    var employerAction = getEmployerActionByNum(employerActionNumber);
+                    switch (employerAction)
+                    {
+                        case empoyerAction._996:
+                            {
+                                // passObj.notifyMsgs.Add("在你打工过程中，遇到了黑心老板鼓吹996是福报，没有陪伴");
+
+
+                            }; break;
+                    }
+                }
+                {
+
+
+                    //职业状况对孩子情操的影响
+                }
+                {
+                    //单职 +10
+                    //如果为负，伤害减半
+                }
+                {
+                    //亲子活动
+                    //+10
+                }
+                //throw new NotImplementedException();
+            }
+
+            private static empoyerAction getEmployerActionByNum(short num)
+            {
+                switch (num)
+                {
+                    case 1:
+                        {
+                            return empoyerAction._996;
+                        };
+                    case 2:
+                        {
+                            return empoyerAction.onlyYounger;
+                        };
+                    case 3:
+                        {
+                            return empoyerAction.discriminateWomen;
+                        };
+                    case 4:
+                        {
+                            return empoyerAction.newTecnology_Success;
+                        };
+                    case 5:
+                        {
+                            return empoyerAction.newTecnology_Failure;
+                        };
+                    case 6:
+                        {
+                            return empoyerAction.goAway;
+                        };
+                    case 7:
+                        {
+                            return empoyerAction.improveWelfare;
+                        };
+                    case 8:
+                        {
+                            return empoyerAction.stopBusiness;
+                        };
+                    default:
+                        {
+                            return empoyerAction._996;
+                        }
                 }
             }
 
@@ -656,6 +820,7 @@ namespace CaseManagerCore
 
                     passObj.state.educationCost.Add(1, new List<double>());
                     passObj.state.educationScore.Add(babyIndex, new List<int>());
+                    passObj.state.spiritScore.Add(babyIndex, new List<int>());
                     return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
                 }
                 else
