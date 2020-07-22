@@ -16,9 +16,37 @@
             border: 1px solid #4cff00;
             padding: 5px;
             margin: 5px;
-            background-color: blue;
-            color: white;
+            background-color: #5E5EA2;
+            color: #b2bdbc;
         }
+
+            .msg.thisYear {
+                background-color: #0000ff;
+                color: #ffffff;
+            }
+
+            .msg.capitalist {
+                background-color: rgba(255, 0, 0, 0.99);
+                color: yellow;
+                border-color: yellow;
+            }
+
+
+        .msg-capitalist {
+            text-align: center;
+            border: 1px solid #4cff00;
+            padding: 5px;
+            margin: 5px;
+            background-color: rgba(222, 151, 151, 0.8);
+            color: #99a40b;
+            border-color: #99a40b;
+        }
+
+            .msg-capitalist.thisYear {
+                background-color: rgba(255, 0, 0, 0.99);
+                color: yellow;
+                border-color: yellow;
+            }
 
         .error {
             text-align: center;
@@ -80,7 +108,9 @@
     <div id="containerOfMain" style="position:absolute;width:calc(100% - 4px);height:calc(100% - 104px);border:solid 2px #000000;left:0px;top:100px;border-bottom-left-radius:10px;border-bottom-right-radius:10px;z-index:1;">
         <div id="askAndAnswer" class="askAndAnswer">
             aaaaaaaaaaaaaaaa
+            <div class="msg">sssssssssssssss</div>
         </div>
+
         <div id="btns" style="height:calc(46px);width:calc(100% - 2px) ;border:none;position:absolute;top:calc(100% - 48px);border-bottom-left-radius:10px;border-bottom-right-radius:10px;">
             <div class="button">继续</div>
             <div class="button" style="background-color:orangered;">纠错</div>

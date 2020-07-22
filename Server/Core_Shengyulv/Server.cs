@@ -32,43 +32,53 @@ namespace Core_Shengyulv
             this.rm = new Random(DateTime.Now.GetHashCode());
         }
 
-        public void StartListener(ref Data data)
+        public async Task StartListenerAsync(Data data)
         {
             try
             {
                 while (true)
                 {
                     Console.WriteLine($"{Thread.CurrentThread.Name}-{DateTime.Now.ToString("yyyy-MM-dd")}:Waiting for a connection...");
-                    using (TcpClient client = server.AcceptTcpClient())
+                    try
                     {
-                        Console.WriteLine($"{Thread.CurrentThread.Name}-{DateTime.Now.ToString("yyyy-MM-dd")}:Connected!");
+                        TcpClient client = await server.AcceptTcpClientAsync();
 
-                        using (var stream = client.GetStream())
+                        //  using (TcpClient client = server.AcceptTcpClientAsync())
                         {
-                            try
+                            Console.WriteLine($"{Thread.CurrentThread.Name}-{DateTime.Now.ToString("yyyy-MM-dd")}:Connected!");
+
+                            using (var stream = client.GetStream())
                             {
-                                Byte[] bytes = new Byte[2 * 1024 * 1024];//2M
+                                try
+                                {
+                                    Byte[] bytes = new Byte[2 * 1024 * 1024];//2M
 
-                                stream.Read(bytes, 0, bytes.Length);
+                                    stream.Read(bytes, 0, bytes.Length);
 
-                                var ss = System.Text.Encoding.UTF8.GetString(bytes);
+                                    var ss = System.Text.Encoding.UTF8.GetString(bytes);
 
-                                var result = dealWithMsg(ref this.rm, ss, ref data);
-                                string str = result.Trim();
-                                Byte[] reply = System.Text.Encoding.UTF8.GetBytes(str);
-                                stream.Write(reply, 0, reply.Length);
+                                    var result = dealWithMsg(ref this.rm, ss, ref data);
+                                    string str = result.Trim();
+                                    Byte[] reply = System.Text.Encoding.UTF8.GetBytes(str);
+                                    stream.Write(reply, 0, reply.Length);
+                                }
+                                catch
+                                {
+
+                                }
                             }
-                            catch
-                            {
 
-                            }
+                            // s.Read()
+
+
+
                         }
-
-                        // s.Read()
-
-
-
                     }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine($"{e.Message}");
+                    }
+
 
                 }
             }
@@ -81,7 +91,7 @@ namespace Core_Shengyulv
 
         private string dealWithMsg(ref Random rm, string ss, ref Data data)
         {
-            return CaseManagerCore.Population.Server.dealWithMsg(ref rm, ss, ref data,this.minitues,this.seconds);
+            return CaseManagerCore.Population.Server.dealWithMsg(ref rm, ss, ref data, this.minitues, this.seconds);
             //  return "";
             try
             {

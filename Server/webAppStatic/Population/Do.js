@@ -228,6 +228,8 @@ $(document).ready(function () {
 var employeeState = null;
 var employeeActions = [];
 var employeeEducateAction = '';
+var employerState = null;
+var employerActions = [];
 var dealWithData = function (strData) {
 
     var objGet = JSON.parse(strData);
@@ -239,6 +241,10 @@ var dealWithData = function (strData) {
             }; break;
         case 'employee-notify':
             {
+                var operateObj = document.getElementById('askAndAnswer');
+                for (var i = 0; i < operateObj.children.length; i++) {
+                    operateObj.children[i].classList.remove('thisYear');
+                }
                 showBtn(objGet.showContinue, objGet.showIsError, false);
                 var objPass = JSON.parse(objGet.msg);
                 {
@@ -249,6 +255,7 @@ var dealWithData = function (strData) {
                     // MathJax.Hub.Queue(["Typeset", MathJax.Hub, divCreateNew]);
                     var askAndAnswer = document.getElementById('askAndAnswer');
                     divCreateNew.classList.add('msg');
+                    divCreateNew.classList.add('thisYear');
                     askAndAnswer.appendChild(divCreateNew);
                     askAndAnswer.scrollTop = askAndAnswer.scrollHeight;
                 }
@@ -257,6 +264,7 @@ var dealWithData = function (strData) {
                     divCreateNew.innerHTML = objPass.yearDisplay;
                     divCreateNew.id = objGet.ObjID + '_b';
                     divCreateNew.classList.add('msg');
+                    divCreateNew.classList.add('thisYear');
                     // MathJax.Hub.Queue(["Typeset", MathJax.Hub, divCreateNew]);
                     var askAndAnswer = document.getElementById('askAndAnswer');
 
@@ -269,6 +277,7 @@ var dealWithData = function (strData) {
                     divCreateNew.innerHTML = objPass.childrenInfo[i];
                     divCreateNew.id = objGet.ObjID + '_c' + i;
                     divCreateNew.classList.add('msg');
+                    divCreateNew.classList.add('thisYear');
                     var askAndAnswer = document.getElementById('askAndAnswer');
 
                     askAndAnswer.appendChild(divCreateNew);
@@ -281,6 +290,12 @@ var dealWithData = function (strData) {
         case 'employee-notify-next':
             {
                 showBtn(objGet.showContinue, objGet.showIsError, false);
+
+                var operateObj = document.getElementById('askAndAnswer');
+                for (var i = 0; i < operateObj.children.length; i++) {
+                    operateObj.children[i].classList.remove('thisYear');
+                }
+
                 var objPass = JSON.parse(objGet.msg);
                 {
                     var divCreateNew = document.createElement('div');
@@ -290,6 +305,7 @@ var dealWithData = function (strData) {
                     // MathJax.Hub.Queue(["Typeset", MathJax.Hub, divCreateNew]);
                     var askAndAnswer = document.getElementById('askAndAnswer');
                     divCreateNew.classList.add('msg');
+                    divCreateNew.classList.add('thisYear');
                     askAndAnswer.appendChild(divCreateNew);
                     askAndAnswer.scrollTop = askAndAnswer.scrollHeight;
                 }
@@ -298,6 +314,7 @@ var dealWithData = function (strData) {
                     divCreateNew.innerHTML = objPass.yearDisplay;
                     divCreateNew.id = objGet.ObjID + '_b';
                     divCreateNew.classList.add('msg');
+                    divCreateNew.classList.add('thisYear');
                     // MathJax.Hub.Queue(["Typeset", MathJax.Hub, divCreateNew]);
                     var askAndAnswer = document.getElementById('askAndAnswer');
 
@@ -310,28 +327,29 @@ var dealWithData = function (strData) {
                     divCreateNew.innerHTML = objPass.childrenInfo[i];
                     divCreateNew.id = objGet.ObjID + '_c' + i;
                     divCreateNew.classList.add('msg');
+                    divCreateNew.classList.add('thisYear');
                     var askAndAnswer = document.getElementById('askAndAnswer');
 
                     askAndAnswer.appendChild(divCreateNew);
                     askAndAnswer.scrollTop = askAndAnswer.scrollHeight;
                 }
-                for (var i = 0; i < objPass.childrenInfo.length; i++) {
+                //for (var i = 0; i < objPass.childrenInfo.length; i++) {
 
-                    var divCreateNew = document.createElement('div');
-                    divCreateNew.innerHTML = objPass.childrenInfo[i];
-                    divCreateNew.id = objGet.ObjID + '_c' + i;
-                    divCreateNew.classList.add('msg');
-                    var askAndAnswer = document.getElementById('askAndAnswer');
+                //    var divCreateNew = document.createElement('div');
+                //    divCreateNew.innerHTML = objPass.childrenInfo[i];
+                //    divCreateNew.id = objGet.ObjID + '_c' + i;
+                //    divCreateNew.classList.add('msg');
+                //    var askAndAnswer = document.getElementById('askAndAnswer');
 
-                    askAndAnswer.appendChild(divCreateNew);
-                    askAndAnswer.scrollTop = askAndAnswer.scrollHeight;
-                }
-                for (var i = 0; i < objPass.notifyMsgs.length; i++)
-                {
+                //    askAndAnswer.appendChild(divCreateNew);
+                //    askAndAnswer.scrollTop = askAndAnswer.scrollHeight;
+                //}
+                for (var i = 0; i < objPass.notifyMsgs.length; i++) {
                     var divCreateNew = document.createElement('div');
                     divCreateNew.innerHTML = objPass.notifyMsgs[i];
                     divCreateNew.id = objGet.ObjID + '_n_' + i;
                     divCreateNew.classList.add('msg');
+                    divCreateNew.classList.add('thisYear');
                     var askAndAnswer = document.getElementById('askAndAnswer');
 
                     askAndAnswer.appendChild(divCreateNew);
@@ -347,6 +365,39 @@ var dealWithData = function (strData) {
                 employeeActions = objGet.actions;
                 employeeEducateAction = objGet.educateAction;
                 selectStrategy();
+            }; break;
+        case 'employer-notify':
+            {
+                var operateObj = document.getElementById('askAndAnswer');
+                for (var i = 0; i < operateObj.children.length; i++) {
+                    operateObj.children[i].classList.remove('thisYear');
+                }
+                showBtn(objGet.showContinue, objGet.showIsError, false);
+                var objPass = JSON.parse(objGet.msg);
+                {
+                    var divCreateNew = document.createElement('div');
+                    divCreateNew.innerHTML = objPass.yearDisplay;
+                    divCreateNew.id = objGet.ObjID + '_b';
+                    divCreateNew.classList.add('msg-capitalist');
+                    divCreateNew.classList.add('thisYear');
+                    // MathJax.Hub.Queue(["Typeset", MathJax.Hub, divCreateNew]);
+                    var askAndAnswer = document.getElementById('askAndAnswer');
+
+                    askAndAnswer.appendChild(divCreateNew);
+                    askAndAnswer.scrollTop = askAndAnswer.scrollHeight;
+                }
+
+                employerState = objPass.state;
+                employerActions = objPass.actions;
+                //employeeState = objPass.state;
+                //employeeActions = objPass.actions;
+                //employeeEducateAction = objPass.educateAction;
+            }; break;
+        case 'employer-action':
+            {
+                employerState = objGet.state;
+                employerActions = objGet.actions;
+                selectStrategyOfEmployer();
             }; break;
     };
 }
@@ -377,6 +428,9 @@ var showBtn = function (showContinue, showIsError, isEnd) {
             if (employeeState != null) {
                 selectStrategy();
             }
+            else if (employerState != null) {
+                selectStrategyOfEmployer();
+            }
         };
         document.getElementById('btns').appendChild(btnErrorRecovery);
     }
@@ -384,6 +438,34 @@ var showBtn = function (showContinue, showIsError, isEnd) {
     //    pMain.socket.close();
     //}
 }
+
+var selectStrategyOfEmployer = function () {
+    //alert('要写策略了');
+    var innerHtml = '<div>';
+
+    var divDesign = function (id, passCommand, classStr, btnLabel, selected) {
+        if (selected) {
+            return `<div id="${id}" onclick="pMain.socket.send('${passCommand}');"><a class="${classStr} selected">${btnLabel}</a></div>`;
+        }
+        else {
+            return `<div id="${id}" onclick="pMain.socket.send('${passCommand}');"><a class="${classStr}">${btnLabel}</a></div>`;
+        }
+    }
+    if (employerState.can996) innerHtml += divDesign('do996Btn', 'A', 'myButton capitalist', '灌输996福报思想', employerActions.indexOf('Employer-996') >= 0);
+    if (employerState.onlyYounger) innerHtml += divDesign('onlyYoungerBtn', 'B', 'myButton capitalist', '只招年轻人', employerActions.indexOf('Employer-OnlyYounger') >= 0);
+    if (employerState.discriminateWomen) innerHtml += divDesign('discriminateWomenBtn', 'C', 'myButton capitalist', '只重用男性', employerActions.indexOf('Employer-DiscriminateWomen') >= 0);
+    if (employerState.newTecnology) innerHtml += divDesign('newTecnologyBtn', 'D', 'myButton capitalist', '研发探索新技术', employerActions.indexOf('Employer-NewTecnology') >= 0);
+    if (employerState.goAway) innerHtml += divDesign('goAwayBtn', 'E', 'myButton capitalist', '产业转移', employerActions.indexOf('Employer-GoAway') >= 0);
+    if (employerState.improveWelfare) innerHtml += divDesign('improveWelfareBtn', 'F', 'myButton capitalist', '提高福利', employerActions.indexOf('Employer-ImproveWelfare') >= 0);
+    if (employerState.stopBusiness) innerHtml += divDesign('stopBusinessBtn', 'G', 'myButton capitalist', '歇业', employerActions.indexOf('Employer-StopBusiness') >= 0);
+
+
+    innerHtml += '<div onclick="selectHtmlHide();"><a class="myButton BtnHideWindow">隐藏</a></div>'
+    innerHtml += '</div>';
+
+    selectHtmlShow(innerHtml);
+}
+
 
 var drawLine = function (ctx, width, height, startPercentX, startPercentY, endPercentX, endPercentY, color, linewidth) {
     if (color === null) { color = 'rgba(255,0,0,0.5)'; }
@@ -629,7 +711,7 @@ var selectRole = function () {
             <div onclick="pMain.socket.send('1');selectHtmlHide();">
                 <a href="#" class="myButton">成为悲催打工仔</a>
             </div>
-            <div onclick="pMain.socket.send('1');selectHtmlHide();">
+            <div onclick="pMain.socket.send('2');selectHtmlHide();">
                 <a href="#" class="myButton">成为万恶资本家</a>
             </div> 
         </div>`;
@@ -665,8 +747,8 @@ var selectStrategy = function () {
 
     if (employeeState.canEducate) innerHtml += educateDivDesign();
 
-    if (employeeState.canPlayWithChildren) innerHtml += divDesign('marryBtn', 'G', 'myButton', '亲子', false);
-    if (employeeState.canSingleWork) innerHtml += divDesign('marryBtn', 'H', 'myButton', '单职', false);
+    if (employeeState.canPlayWithChildren) innerHtml += divDesign('marryBtn', 'G', 'myButton', '亲子', employeeActions.indexOf('Employee-PlayWithChildren') >= 0);
+    if (employeeState.canSingleWork) innerHtml += divDesign('marryBtn', 'H', 'myButton', '单职', employeeActions.indexOf('Employee-SingleWork') >= 0);
     if (employeeState.canStrugle) innerHtml += divDesign('marryBtn', 'I', 'myButton', '奋斗', employeeActions.indexOf('Employee-Strive') >= 0);
 
 

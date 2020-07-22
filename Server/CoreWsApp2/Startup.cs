@@ -489,6 +489,14 @@ namespace CoreWsApp2
 
                                                 }
                                             }; break;
+                                        case "Population":
+                                            {
+                                                if (Populations != null)
+                                                {
+                                                    Populations.setAsEmployer();//[´Êµä]	employer; 
+                                                    msg = Populations.GetMsg();
+                                                }
+                                            }; break;
                                     }
 
                                 }; break;
@@ -724,7 +732,141 @@ namespace CoreWsApp2
                                         msg = Populations.GetMsg();
                                     }
                                 }; break;
+                            case "C":
+                                {
+                                    switch (state)
+                                    {
+                                        case "Population":
+                                            {
+                                                if (Populations != null)
+                                                {
+                                                    Populations.Action("C");
+                                                    msg = Populations.GetMsg();
+                                                }
 
+                                            }; break;
+                                    }
+                                }; break;
+                            case "D":
+                                {
+                                    switch (state)
+                                    {
+                                        case "Population":
+                                            {
+                                                if (Populations != null)
+                                                {
+                                                    Populations.Action("D");
+                                                    msg = Populations.GetMsg();
+                                                }
+
+                                            }; break;
+                                    }
+                                }; break;
+                            case "E":
+                                {
+                                    switch (state)
+                                    {
+                                        case "Population":
+                                            {
+                                                if (Populations != null)
+                                                {
+                                                    Populations.Action("E");
+                                                    msg = Populations.GetMsg();
+                                                }
+
+                                            }; break;
+                                    }
+                                }; break;
+                            case "F":
+                                {
+                                    switch (state)
+                                    {
+                                        case "Population":
+                                            {
+                                                if (Populations != null)
+                                                {
+                                                    Populations.Action("F");
+                                                    msg = Populations.GetMsg();
+                                                }
+
+                                            }; break;
+                                    }
+                                }; break;
+                            case "G":
+                                {
+                                    switch (state)
+                                    {
+                                        case "Population":
+                                            {
+                                                if (Populations != null)
+                                                {
+                                                    Populations.Action("G");
+                                                    msg = Populations.GetMsg();
+                                                }
+
+                                            }; break;
+                                    }
+                                }; break;
+                            case "H":
+                                {
+                                    switch (state)
+                                    {
+                                        case "Population":
+                                            {
+                                                if (Populations != null)
+                                                {
+                                                    Populations.Action("H");
+                                                    msg = Populations.GetMsg();
+                                                }
+
+                                            }; break;
+                                    }
+                                }; break;
+                            case "J":
+                                {
+                                    switch (state)
+                                    {
+                                        case "Population":
+                                            {
+                                                if (Populations != null)
+                                                {
+                                                    Populations.Action("J");
+                                                    msg = Populations.GetMsg();
+                                                }
+
+                                            }; break;
+                                    }
+                                }; break;
+                            case "K":
+                                {
+                                    switch (state)
+                                    {
+                                        case "Population":
+                                            {
+                                                if (Populations != null)
+                                                {
+                                                    Populations.Action("K");
+                                                    msg = Populations.GetMsg();
+                                                }
+
+                                            }; break;
+                                    }
+                                }; break;
+                            case "L":
+                                {
+                                    switch (state)
+                                    {
+                                        case "Population":
+                                            {
+                                                if (Populations != null)
+                                                {
+                                                    Populations.Action("L");
+                                                    msg = Populations.GetMsg();
+                                                }
+
+                                            }; break;
+                                    }
+                                }; break;
                             default:
                                 {
                                     if (EccCore.Address.ValidateBitcoinAddress(str))

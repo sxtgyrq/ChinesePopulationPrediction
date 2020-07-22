@@ -65,7 +65,10 @@
         border-width: 1px;
         border-color: white;
     }
-
+    .myButton.capitalist { 
+        color: yellow;
+        border-color: rgba(255, 0, 0, 0.99);
+    }
 @keyframes example {
     0% {
         border-color: red;

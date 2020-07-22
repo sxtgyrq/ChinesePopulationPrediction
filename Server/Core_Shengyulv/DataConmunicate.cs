@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Core_Shengyulv
@@ -9,8 +11,9 @@ namespace Core_Shengyulv
     public class DataConmunicate
     {
 
-        internal static void Do(string select)
+        internal static void DoAsync(string select)
         {
+            //  Thread.CurrentThread.Name = "Main";
             //using (StreamReader sr = new StreamReader(""))
             //{
             //    // Read the stream to a string, and write the string to the console.
@@ -35,7 +38,7 @@ namespace Core_Shengyulv
             }
             // var ip = data.IP;
             var s = new Server(ip, port);
-            s.StartListener(ref dt);
+            _ = s.StartListenerAsync(dt);
         }
     }
 }

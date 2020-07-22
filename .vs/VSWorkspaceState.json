@@ -3,9 +3,8 @@
     "",
     "\\Server",
     "\\Server\\webAppStatic",
-    "\\Server\\webAppStatic\\Js",
     "\\Server\\webAppStatic\\Population"
   ],
-  "SelectedNode": "\\Server\\Server.sln",
+  "SelectedNode": "\\Server\\webAppStatic\\Population\\Do.js",
   "PreviewInSolutionExplorer": false
 }

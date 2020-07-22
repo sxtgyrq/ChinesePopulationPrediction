@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.VisualBasic;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -6,7 +7,7 @@ namespace Core_Shengyulv
 {
     class Program
     {
-        static void Main(string[] args)
+        static async System.Threading.Tasks.Task Main(string[] args)
         {
             string msg = @"
 这个程序的目的是模拟政府行为-企业行为-个人行为对整个社会生育率的影响。
@@ -17,7 +18,7 @@ debug
 
             Thread.CurrentThread.Name = "MainOnly";
             var select = Console.ReadLine();
-            MainThread(select);
+            MainThreadAsync(select);
             AssistThread(select);
 
             //  DataConmunicate.Do(select);
@@ -111,9 +112,11 @@ debug
             ThMain.Start();
         }
 
-        private static void MainThread(string select)
+        private static void MainThreadAsync(string select)
         {
-            Thread ThMain = new Thread(() => DataConmunicate.Do(select));
+            //_ = DataConmunicate.DoAsync(select);
+
+            Thread ThMain = new Thread(() => DataConmunicate.DoAsync(select)  );
             ThMain.Name = "MainOnly";
             ThMain.Start();
 
