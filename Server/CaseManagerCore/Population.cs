@@ -88,7 +88,8 @@ namespace CaseManagerCore
         {
             normal,
             strive,
-            enjoyTime
+            enjoyTime,
+            singleWork
         }
 
         public class Employee
@@ -1589,6 +1590,8 @@ namespace CaseManagerCore
         {
             public class State
             {
+                internal int newTecnologySuccessProtectCount;
+
                 public bool can996 { get; set; }
                 public bool onlyYounger { get; set; }
                 public bool discriminateWomen { get; set; }
@@ -1661,6 +1664,151 @@ namespace CaseManagerCore
 
                 var condition = getWorkCondition(ref rm, data);
 
+                //  double addPercent = 1;
+
+
+                var checkOrder = new List<string>()
+                {
+                    "Employer-996",
+                    "Employer-OnlyYounger",
+                    "Employer-DiscriminateWomen",
+                  //  "Employer-NewTecnology",
+                    "Employer-GoAway",
+                    "Employer-ImproveWelfare",
+                    "Employer-StopBusiness"
+                };
+                var operateT = DateTime.Now.GetHashCode().ToString();
+                checkOrder = checkOrder.OrderBy(item => (item + operateT).GetHashCode()).ToList();
+                checkOrder.Insert(0, "Employer-NewTecnology");
+
+                var govPosition = data.govementPosition.Last();
+
+
+                double addValue = 0;
+                double lossValue = 0;
+                for (int i = 0; i < checkOrder.Count; i++)
+                {
+                    switch (checkOrder[i])
+                    {
+                        case "Employer-996":
+                            {
+                                if (passObj.actions.Contains(checkOrder[i]))
+                                {
+                                    var successCount = 10 - 0.091 * govPosition;
+                                    if (condition.Count(item => item == emploeeAction.strive) > successCount)
+                                    {
+                                        var itemAdd = Math.Round(passObj.state.sumSave * (data.businessRate - 1), 2);
+                                        itemAdd = Math.Max(itemAdd, 0.01);
+                                        passObj.notifyMsgs.Add($"你实行了996，员工没有带头造反的，你获得了{itemAdd.ToString("f2")}金币。");
+                                        addValue += itemAdd;
+                                    }
+                                    else
+                                    {
+                                        if (passObj.state.newTecnologySuccessProtectCount > 0)
+                                        {
+                                            passObj.notifyMsgs.Add($"你实行了996，有部分员工走了。");
+                                            passObj.state.newTecnologySuccessProtectCount--;
+                                            passObj.notifyMsgs.Add($"你的明星企业家光环保护-1，变为{passObj.state.newTecnologySuccessProtectCount}！");
+                                        }
+                                        else
+                                        {
+                                            var lossItem = Math.Round(passObj.state.sumSave * (1 - 1 / data.businessRate), 2);
+                                            passObj.notifyMsgs.Add($"你实行了996，员工对开始造反了，你损失了{lossItem.ToString("f2")}金币。");
+                                            lossValue -= lossItem;
+                                        }
+                                    }
+                                }
+                            }; break;
+                        case "Employer-OnlyYounger":
+                            {
+                                if (passObj.actions.Contains(checkOrder[i]))
+                                {
+                                    var successCount = 13 - 0.081 * govPosition;
+                                    if (condition.Count(item => item == emploeeAction.enjoyTime) > successCount)
+                                    {
+                                        var itemAdd = Math.Round(passObj.state.sumSave * (data.businessRate - 1), 2);
+                                        itemAdd = Math.Max(itemAdd, 0.01);
+                                        passObj.notifyMsgs.Add($"你排挤大龄员工，没人搞你，你获得了{itemAdd.ToString("f2")}金币。");
+                                        addValue += itemAdd;
+                                    }
+                                    else
+                                    {
+                                        if (passObj.state.newTecnologySuccessProtectCount > 0)
+                                        {
+                                            passObj.notifyMsgs.Add($"有屁民诽谤你：“排挤大龄员工。”");
+                                            passObj.state.newTecnologySuccessProtectCount--;
+                                            passObj.notifyMsgs.Add($"你的明星企业家光环保护-1，变为{passObj.state.newTecnologySuccessProtectCount}！");
+                                        }
+                                        else
+                                        {
+                                            var lossItem = Math.Round(passObj.state.sumSave * (1 - 1 / data.businessRate), 2);
+                                            passObj.notifyMsgs.Add($"你排挤大龄员工，部分人去劳动局告你了，你损失了{lossItem.ToString("f2")}金币。");
+                                            lossValue -= lossItem;
+                                        }
+                                    }
+                                }
+                            }; break;
+                        case "Employer-DiscriminateWomen":
+                            {
+                                if (passObj.actions.Contains(checkOrder[i]))
+                                {
+                                    var successCount = 12 - 0.111 * govPosition;
+                                    if (condition.Count(item => item == emploeeAction.singleWork) > successCount)
+                                    {
+                                        var itemAdd = Math.Round(passObj.state.sumSave * (data.businessRate - 1), 2);
+                                        itemAdd = Math.Max(itemAdd, 0.01);
+                                        passObj.notifyMsgs.Add($"你招工时，只招男的，没人举报你，你获得了{itemAdd.ToString("f2")}金币。");
+                                        addValue += itemAdd;
+                                    }
+                                    else
+                                    {
+                                        if (passObj.state.newTecnologySuccessProtectCount > 0)
+                                        {
+                                            passObj.notifyMsgs.Add($"有屁民流传你：“你招工时，只招男员工。”");
+                                            passObj.state.newTecnologySuccessProtectCount--;
+                                            passObj.notifyMsgs.Add($"你的明星企业家光环保护-1，变为{passObj.state.newTecnologySuccessProtectCount}！");
+                                        }
+                                        else
+                                        {
+                                            var lossItem = Math.Round(passObj.state.sumSave * (1 - 1 / data.businessRate), 2);
+                                            passObj.notifyMsgs.Add($"你招工时，只招男的，你被人举报歧视女性员工，你损失了{lossItem.ToString("f2")}金币。");
+                                            lossValue -= lossItem;
+                                        }
+                                    }
+                                }
+                            }; break;
+                        case "Employer-NewTecnology":
+                            {
+                                if (passObj.actions.Contains(checkOrder[i]))
+                                {
+                                    //  var successCount = 12 - 0.111 * govPosition;
+                                    var succss = 0.35 - 0.0015 * govPosition;
+                                    if (rm.NextDouble() < succss)
+                                    {
+                                        var itemAdd = Math.Round(passObj.state.sumSave * (data.businessRate - 1) * 2, 2);
+                                        passObj.notifyMsgs.Add($"你研发新技术成功了,获得了{itemAdd.ToString("f2")}金币！");
+                                        passObj.state.newTecnologySuccessProtectCount = 3;
+                                        passObj.notifyMsgs.Add($"您获得了明星企业家光环保护{passObj.state.newTecnologySuccessProtectCount}！");
+                                    }
+                                    else
+                                    {
+                                        var itemLoss = Math.Round(passObj.state.sumSave * (1 - 1 / data.businessRate), 2);
+                                        passObj.notifyMsgs.Add($"你研发新技术失败了，损失了{itemLoss.ToString("f2")}金币！");
+                                    }
+                                }
+                            }; break;
+
+
+                    }
+                }
+
+                if (passObj.state.newTecnologySuccessProtectCount > 0)
+                {
+                    passObj.state.newTecnologySuccessProtectCount--;
+                }
+                return Newtonsoft.Json.JsonConvert.SerializeObject(passObj);
+
+
             }
 
             private static List<emploeeAction> getWorkCondition(ref Random rm, Data data)
@@ -1673,41 +1821,44 @@ namespace CaseManagerCore
                         employeeActions.Add(data.employteenActions[i][j]);
                     }
                 }
+
                 while (employeeActions.Count < 100)
                 {
                     employeeActions.Add(Convert.ToInt16(rm.Next(0, 3)));
                 }
+
                 Dictionary<int, bool> indexSelected = new Dictionary<int, bool>();
 
-                var employeeActionsOfSelect = new List<short>();
+                var employeeActionsOfSelect = new List<emploeeAction>();
                 while (employeeActionsOfSelect.Count < 15)
                 {
                     var indexRm = rm.Next(employeeActions.Count);
-                    if (indexSelected.ContainsKey(indexRm)) 
+                    if (indexSelected.ContainsKey(indexRm))
                     {
                         continue;
                     }
-                    else 
+                    else
                     {
-                        employeeActionsOfSelect.Add(employeeActions[indexRm]);
+                        indexSelected.Add(indexRm, true);
+                        switch (employeeActions[indexRm])
+                        {
+                            case 0:
+                                {
+                                    employeeActionsOfSelect.Add(emploeeAction.normal);
+                                }; break;
+                            case 1:
+                                {
+                                    employeeActionsOfSelect.Add(emploeeAction.strive);
+                                }; break;
+                            case 2:
+                                {
+                                    employeeActionsOfSelect.Add(emploeeAction.enjoyTime);
+                                }; break;
+                        }
+
                     }
                 }
-
-
-
-                //var result = new List<emploeeAction>();
-
-                //if (employeeActions.Count < 15)
-                //{
-                //    return empoyerAction.@null;
-                //}
-                //else
-                //{
-                //    var employerActionNumber = employerActions[rm.Next(0, employerActions.Count)];
-                //    return getEmployerActionByNum(employerActionNumber);
-                //}
-
-                //throw new NotImplementedException();
+                return employeeActionsOfSelect;
             }
         }
 

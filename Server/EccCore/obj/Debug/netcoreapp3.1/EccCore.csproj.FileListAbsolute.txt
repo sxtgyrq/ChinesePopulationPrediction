@@ -15,4 +15,3 @@ F:\MyProject\Cpp\ChinesePopulationPrediction\Server\EccCore\obj\Debug\netcoreapp
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\EccCore\obj\Debug\netcoreapp3.1\EccCore.AssemblyInfo.cs
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\EccCore\obj\Debug\netcoreapp3.1\EccCore.dll
 F:\MyProject\Cpp\ChinesePopulationPrediction\Server\EccCore\obj\Debug\netcoreapp3.1\EccCore.pdb
-F:\MyProject\Cpp\ChinesePopulationPrediction\Server\EccCore\obj\Debug\netcoreapp3.1\EccCore.csprojAssemblyReference.cache

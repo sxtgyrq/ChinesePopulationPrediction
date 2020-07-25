@@ -110,7 +110,7 @@ namespace CoreWsApp2
             CaseManager.QianAndYang QianAndYangs = null; //Dictionary<string, CaseManager.QianAndYang> QianAndYangs = new Dictionary<string, CaseManager.QianAndYang>();
 
             CaseManager.Kobe Kobes = null;
-            CaseManager.Identitycard IdCards = null;
+            //CaseManager.Identitycard IdCards = null;
             CaseManager.SelfSoftware SelfSoftwares = null;
             CaseManager.Yilingersi Yilingersis = null;
             CaseManager.MapFightTaiYuan MapFightTaiYuans = null;
@@ -214,12 +214,12 @@ namespace CoreWsApp2
                                                 Kobes = obj;
                                                 msg = Kobes.GetMsg();
                                             }; break;
-                                        case "Identitycard":
-                                            {
-                                                var obj = new CaseManager.Identitycard();
-                                                IdCards = obj;
-                                                msg = IdCards.GetMsg();
-                                            }; break;
+                                        //case "Identitycard":
+                                        //    {
+                                        //        var obj = new CaseManager.Identitycard();
+                                        //        IdCards = obj;
+                                        //        msg = IdCards.GetMsg();
+                                        //    }; break;
                                         case "SelfSoftware":
                                             {
                                                 var obj = new CaseManager.SelfSoftware();
@@ -376,12 +376,12 @@ namespace CoreWsApp2
                                             }; break;
                                         case "Identitycard":
                                             {
-                                                if (IdCards != null)
-                                                {
-                                                    IdCards.Continue();
-                                                    msg = IdCards.GetMsg();
+                                                //if (IdCards != null)
+                                                //{
+                                                //    IdCards.Continue();
+                                                //    msg = IdCards.GetMsg();
 
-                                                }
+                                                //}
                                             }; break;
                                         case "SelfSoftware":
                                             {
@@ -464,12 +464,12 @@ namespace CoreWsApp2
                                             }; break;
                                         case "Identitycard":
                                             {
-                                                if (IdCards != null)
-                                                {
-                                                    IdCards.errorRecovery();
-                                                    msg = IdCards.GetMsg();
+                                                //if (IdCards != null)
+                                                //{
+                                                //    IdCards.errorRecovery();
+                                                //    msg = IdCards.GetMsg();
 
-                                                }
+                                                //}
                                             }; break;
                                         case "SelfSoftware":
                                             {
@@ -925,11 +925,11 @@ namespace CoreWsApp2
                                                 }; break;
                                             case "Identitycard":
                                                 {
-                                                    if (IdCards != null)
-                                                    {
-                                                        msg = IdCards.SaveAddress(str.Trim());
+                                                    //if (IdCards != null)
+                                                    //{
+                                                    //    msg = IdCards.SaveAddress(str.Trim());
 
-                                                    }
+                                                    //}
                                                 }; break;
                                             case "SelfSoftware":
                                                 {
